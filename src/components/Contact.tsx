@@ -7,53 +7,88 @@ import {
   Briefcase,
   Laptop,
   Globe,
-  Server,
-  Database,
-  Layout,
   CheckCircle,
   ChevronRight,
   Github,
   Linkedin,
   ChevronUp,
 } from "lucide-react";
-
-const sections = [
-  {
-    title: "Work Arrangements",
-    icon: Briefcase,
-    items: ["Full-Time Roles", "Freelance & Contract"],
-  },
-  {
-    title: "Location Preference",
-    icon: Globe,
-    items: ["Remote", "Onsite & Relocation-friendly"],
-  },
-  {
-    title: "Areas of Expertise",
-    icon: Laptop,
-    items: [
-      "Frontend Development (React, Next.js, Vue)",
-      "Backend & APIs (REST, GraphQL)",
-      "Databases (SQL, NoSQL)",
-      "Cloud & Infrastructure (AWS, Docker)",
-    ],
-  },
-];
-
-const whyWorkWithMe = [
-  "5+ years of professional experience",
-  "100+ successful projects delivered",
-  "Clean, maintainable code",
-  "On-time delivery guarantee",
-];
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Contact = () => {
+  const { t, language } = useLanguage();
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+
+  // Define sections with proper arrays based on language
+  const getSections = () => {
+    const workArrangementItems =
+      language === "sv"
+        ? ["Heltidsroller", "Frilans & kontrakt"]
+        : ["Full-Time Roles", "Freelance & Contract"];
+
+    const locationItems =
+      language === "sv"
+        ? ["Distans", "På plats & flytt-vänlig"]
+        : ["Remote", "Onsite & Relocation-friendly"];
+
+    const expertiseItems =
+      language === "sv"
+        ? [
+            "Frontend-utveckling (React, Next.js, Vue)",
+            "Backend & API:er (REST, GraphQL)",
+            "Databaser (SQL, NoSQL)",
+            "Moln & infrastruktur (AWS, Docker)",
+          ]
+        : [
+            "Frontend Development (React, Next.js, Vue)",
+            "Backend & APIs (REST, GraphQL)",
+            "Databases (SQL, NoSQL)",
+            "Cloud & Infrastructure (AWS, Docker)",
+          ];
+
+    return [
+      {
+        title: t("contact.workArrangements.title"),
+        icon: Briefcase,
+        items: workArrangementItems,
+      },
+      {
+        title: t("contact.locationPreference.title"),
+        icon: Globe,
+        items: locationItems,
+      },
+      {
+        title: t("contact.expertise.title"),
+        icon: Laptop,
+        items: expertiseItems,
+      },
+    ];
+  };
+
+  const getWhyWorkWithMe = () => {
+    return language === "sv"
+      ? [
+          "5+ års professionell erfarenhet",
+          "100+ framgångsrikt levererade projekt",
+          "Ren, underhållbar kod",
+          "Garanti för leverans i tid",
+        ]
+      : [
+          "5+ years of professional experience",
+          "100+ successful projects delivered",
+          "Clean, maintainable code",
+          "On-time delivery guarantee",
+        ];
+  };
+
+  const sections = getSections();
+  const whyWorkWithMe = getWhyWorkWithMe();
 
   return (
     <section
@@ -62,10 +97,11 @@ const Contact = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">Let's Work Together</h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">
+            {t("contact.title")}
+          </h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            Ready to bring your vision to life? I'd love to hear about your
-            project and discuss how we can create something amazing together.
+            {t("contact.subtitle")}
           </p>
         </div>
 
@@ -77,12 +113,12 @@ const Contact = () => {
                   <Mail className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Email</h3>
+                  <h3 className="font-semibold mb-1">{t("contact.email")}</h3>
                   <p className="text-[hsl(var(--muted-foreground))]">
                     hello@developer.com
                   </p>
                   <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    Drop me a line anytime
+                    {t("contact.emailText")}
                   </p>
                 </div>
               </div>
@@ -91,12 +127,12 @@ const Contact = () => {
                   <Phone className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Phone</h3>
+                  <h3 className="font-semibold mb-1">{t("contact.phone")}</h3>
                   <p className="text-[hsl(var(--muted-foreground))]">
                     +1 (555) 123-4567
                   </p>
                   <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    Available Mon-Fri, 9AM-6PM EST
+                    {t("contact.phoneText")}
                   </p>
                 </div>
               </div>
@@ -105,12 +141,14 @@ const Contact = () => {
                   <MapPin className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">Location</h3>
+                  <h3 className="font-semibold mb-1">
+                    {t("contact.location")}
+                  </h3>
                   <p className="text-[hsl(var(--muted-foreground))]">
                     San Francisco, CA
                   </p>
                   <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    Open to remote opportunities
+                    {t("contact.locationText")}
                   </p>
                 </div>
               </div>
@@ -130,7 +168,7 @@ const Contact = () => {
               </a>
             </div>
             <div className="mt-12 p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg border-2 border-[hsl(var(--interactive))]/20">
-              <h3 className="text-xl font-bold mb-4">Why Work With Me?</h3>
+              <h3 className="text-xl font-bold mb-4">{t("contact.whyWork")}</h3>
               <ul className="space-y-3">
                 {whyWorkWithMe.map((item, index) => (
                   <li key={index} className="flex items-center">

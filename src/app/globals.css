@@ -84,6 +84,26 @@
     @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
   }
   .section-padding {
-    @apply py-20 px-4 sm:px-6 lg:px-8;
+    padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 2.5rem);
+  }
+  .gap-fluid {
+    gap: clamp(1rem, 4vw, 2rem);
+  }
+  .nav-link-active {
+    opacity: 1 !important;
+    color: hsl(var(--interactive));
+    font-weight: 600;
+  }
+
+  .text-responsive-h1 {
+    font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+  }
+
+  .text-responsive-h2 {
+    font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  }
+
+  .text-responsive-p {
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
   }
 }

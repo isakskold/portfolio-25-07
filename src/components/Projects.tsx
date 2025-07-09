@@ -9,60 +9,7 @@ import {
   Github,
   ChevronDown,
 } from "lucide-react";
-
-const projects = [
-  {
-    category: "Full Stack",
-    title: "E-Commerce Platform",
-    description:
-      "Full-stack e-commerce solution with real-time inventory, payment processing, and admin dashboard. Built for scalability with microservices architecture.",
-    features: [
-      "Payment Integration",
-      "Real-time Updates",
-      "Admin Dashboard",
-      "Mobile Responsive",
-    ],
-    technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Stripe"],
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    category: "SaaS",
-    title: "Task Management SaaS",
-    description:
-      "Collaborative project management tool with real-time collaboration, file sharing, and advanced reporting. Serves 10,000+ active users.",
-    features: [
-      "Real-time Collaboration",
-      "File Management",
-      "Advanced Analytics",
-      "Team Workspaces",
-    ],
-    technologies: ["Next.js", "TypeScript", "Prisma", "tRPC", "Vercel"],
-    image:
-      "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    category: "Data Visualization",
-    title: "Financial Dashboard",
-    description:
-      "Analytics dashboard for financial data visualization with real-time charts, custom reporting, and data export capabilities.",
-    features: [
-      "Interactive Charts",
-      "Real-time Data",
-      "Custom Reports",
-      "Data Export",
-    ],
-    technologies: ["Vue.js", "D3.js", "Python", "FastAPI", "Redis"],
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-];
+import { useLanguage } from "@/hooks/useLanguage";
 
 const getIcon = (category: string) => {
   switch (category) {
@@ -78,23 +25,112 @@ const getIcon = (category: string) => {
 };
 
 const Projects = () => {
+  const { t, language } = useLanguage();
+
   const scrollToNext = () => {
     document.getElementById("skills")?.scrollIntoView({
       behavior: "smooth",
     });
   };
 
+  // Define projects with proper feature arrays based on language
+  const getProjects = () => {
+    const ecommerceFeatures =
+      language === "sv"
+        ? [
+            "Betalningsintegration",
+            "Realtidsuppdateringar",
+            "Adminpanel",
+            "Mobilresponsiv",
+          ]
+        : [
+            "Payment Integration",
+            "Real-time Updates",
+            "Admin Dashboard",
+            "Mobile Responsive",
+          ];
+
+    const saasFeatures =
+      language === "sv"
+        ? [
+            "Realtidssamarbete",
+            "Filhantering",
+            "Avancerad analys",
+            "Teamarbetsytor",
+          ]
+        : [
+            "Real-time Collaboration",
+            "File Management",
+            "Advanced Analytics",
+            "Team Workspaces",
+          ];
+
+    const dashboardFeatures =
+      language === "sv"
+        ? [
+            "Interaktiva diagram",
+            "Realtidsdata",
+            "Anpassade rapporter",
+            "Dataexport",
+          ]
+        : [
+            "Interactive Charts",
+            "Real-time Data",
+            "Custom Reports",
+            "Data Export",
+          ];
+
+    return [
+      {
+        category: "Full Stack",
+        title: t("projects.ecommerce.title"),
+        description: t("projects.ecommerce.description"),
+        features: ecommerceFeatures,
+        technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Stripe"],
+        image:
+          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+        liveUrl: "#",
+        githubUrl: "#",
+      },
+      {
+        category: "SaaS",
+        title: t("projects.saas.title"),
+        description: t("projects.saas.description"),
+        features: saasFeatures,
+        technologies: ["Next.js", "TypeScript", "Prisma", "tRPC", "Vercel"],
+        image:
+          "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80",
+        liveUrl: "#",
+        githubUrl: "#",
+      },
+      {
+        category: "Data Visualization",
+        title: t("projects.dashboard.title"),
+        description: t("projects.dashboard.description"),
+        features: dashboardFeatures,
+        technologies: ["Vue.js", "D3.js", "Python", "FastAPI", "Redis"],
+        image:
+          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+        liveUrl: "#",
+        githubUrl: "#",
+      },
+    ];
+  };
+
+  const projects = getProjects();
+
   return (
     <section
       id="projects"
-      className="section-padding min-h-screen flex flex-col justify-center relative"
+      className="section-padding bg-[hsl(var(--background))]"
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">Featured Projects</h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">
+            {t("projects.title")}
+          </h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            A showcase of recent work demonstrating technical expertise,
-            problem-solving skills, and attention to user experience.
+            {t("projects.subtitle")}
           </p>
         </div>
 
@@ -129,7 +165,9 @@ const Projects = () => {
                 </p>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3">Key Features:</h4>
+                  <h4 className="font-semibold mb-3">
+                    {t("projects.keyFeatures")}
+                  </h4>
                   <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
                     {project.features.map((feature, featureIndex) => (
                       <li
@@ -144,7 +182,9 @@ const Projects = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3">Technologies:</h4>
+                  <h4 className="font-semibold mb-3">
+                    {t("projects.technologies")}
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
                       <span
@@ -163,32 +203,34 @@ const Projects = () => {
                     className="flex items-center gap-2 bg-[hsl(var(--interactive))] text-[hsl(var(--interactive-foreground))] px-6 py-3 rounded-lg font-semibold hover-lift"
                   >
                     <ExternalLink size={18} />
-                    Live Demo
+                    {t("projects.liveDemo")}
                   </a>
                   <a
                     href={project.githubUrl}
                     className="flex items-center gap-2 border-2 border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 text-[hsl(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover-lift transition-colors"
                   >
                     <Github size={18} />
-                    Code
+                    {t("projects.code")}
                   </a>
                 </div>
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-      <button
-        onClick={scrollToNext}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        aria-label="Scroll to next section"
-      >
-        <ChevronDown
-          size={32}
-          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-        />
-      </button>
+        <div className="text-center mt-24">
+          <button
+            onClick={scrollToNext}
+            className="animate-bounce hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Scroll to next section"
+          >
+            <ChevronDown
+              size={32}
+              className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+            />
+          </button>
+        </div>
+      </div>
     </section>
   );
 };

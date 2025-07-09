@@ -2,8 +2,11 @@
 
 import React from "react";
 import { Code, Database, Globe, Zap, ChevronDown } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const About = () => {
+  const { t } = useLanguage();
+
   const scrollToNext = () => {
     document.getElementById("projects")?.scrollIntoView({
       behavior: "smooth",
@@ -13,23 +16,23 @@ const About = () => {
   const highlights = [
     {
       icon: <Code className="w-8 h-8 text-blue-500" />,
-      title: "Frontend Excellence",
-      description: "Modern React, TypeScript, and cutting-edge UI frameworks",
+      title: t("about.highlights.frontend.title"),
+      description: t("about.highlights.frontend.description"),
     },
     {
       icon: <Database className="w-8 h-8 text-green-500" />,
-      title: "Backend Mastery",
-      description: "Scalable APIs, databases, and cloud infrastructure",
+      title: t("about.highlights.backend.title"),
+      description: t("about.highlights.backend.description"),
     },
     {
       icon: <Globe className="w-8 h-8 text-purple-500" />,
-      title: "Full Stack Vision",
-      description: "End-to-end solutions from concept to deployment",
+      title: t("about.highlights.fullstack.title"),
+      description: t("about.highlights.fullstack.description"),
     },
     {
       icon: <Zap className="w-8 h-8 text-yellow-500" />,
-      title: "Performance Focus",
-      description: "Optimized applications that scale and perform",
+      title: t("about.highlights.performance.title"),
+      description: t("about.highlights.performance.description"),
     },
   ];
 
@@ -40,34 +43,22 @@ const About = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">About Me</h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">
+            {t("about.title")}
+          </h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            A passionate full stack developer with 5+ years of experience
-            building robust web applications for startups and enterprises.
+            {t("about.subtitle")}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12 items-start">
+        <div className="grid lg:grid-cols-5 gap-fluid items-start">
           <div className="lg:col-span-2 space-y-4 text-lg text-[hsl(var(--muted-foreground))]">
-            <p>
-              I specialize in creating seamless digital experiences that bridge
-              the gap between beautiful design and powerful functionality. My
-              approach combines technical expertise with business understanding
-              to deliver solutions that truly make an impact.
-            </p>
-            <p>
-              From architecting scalable backend systems to crafting intuitive
-              user interfaces, I bring a comprehensive skill set that ensures
-              your project succeeds at every level.
-            </p>
-            <p>
-              I believe in writing clean, maintainable code and staying current
-              with the latest technologies while prioritizing proven, stable
-              solutions for production applications.
-            </p>
+            <p>{t("about.description1")}</p>
+            <p>{t("about.description2")}</p>
+            <p>{t("about.description3")}</p>
           </div>
 
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-fluid">
             {highlights.map((item, index) => (
               <div
                 key={index}
@@ -82,18 +73,20 @@ const About = () => {
             ))}
           </div>
         </div>
-      </div>
 
-      <button
-        onClick={scrollToNext}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        aria-label="Scroll to next section"
-      >
-        <ChevronDown
-          size={32}
-          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-        />
-      </button>
+        <div className="text-center mt-16">
+          <button
+            onClick={scrollToNext}
+            className="animate-bounce hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Scroll to next section"
+          >
+            <ChevronDown
+              size={32}
+              className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+            />
+          </button>
+        </div>
+      </div>
     </section>
   );
 };

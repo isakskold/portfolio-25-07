@@ -2,42 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Code, Database, Cloud } from "lucide-react";
-
-const skillCategories = [
-  {
-    title: "Frontend",
-    icon: <Code className="w-8 h-8 text-[hsl(var(--interactive))]" />,
-    skills: [
-      "React",
-      "TypeScript",
-      "Next.js",
-      "Tailwind CSS",
-      "Vue.js",
-      "HTML5",
-      "CSS3",
-    ],
-  },
-  {
-    title: "Backend",
-    icon: <Database className="w-8 h-8 text-[hsl(var(--interactive))]" />,
-    skills: [
-      "Node.js",
-      "Python",
-      "PostgreSQL",
-      "MongoDB",
-      "GraphQL",
-      "Express.js",
-      "FastAPI",
-    ],
-  },
-  {
-    title: "Tools & Cloud",
-    icon: <Cloud className="w-8 h-8 text-[hsl(var(--interactive))]" />,
-    skills: ["AWS", "Docker", "Git", "CI/CD", "Kubernetes", "Vercel", "Figma"],
-  },
-];
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Skills = () => {
+  const { t } = useLanguage();
   const [expanded, setExpanded] = useState<number[]>([]);
   const [animatingOut, setAnimatingOut] = useState<number[]>([]);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -58,6 +26,48 @@ const Skills = () => {
 
     return () => window.removeEventListener("resize", checkIsDesktop);
   }, []);
+
+  const skillCategories = [
+    {
+      title: t("skills.frontend"),
+      icon: <Code className="w-8 h-8 text-[hsl(var(--interactive))]" />,
+      skills: [
+        "React",
+        "TypeScript",
+        "Next.js",
+        "Tailwind CSS",
+        "Vue.js",
+        "HTML5",
+        "CSS3",
+      ],
+    },
+    {
+      title: t("skills.backend"),
+      icon: <Database className="w-8 h-8 text-[hsl(var(--interactive))]" />,
+      skills: [
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "MongoDB",
+        "GraphQL",
+        "Express.js",
+        "FastAPI",
+      ],
+    },
+    {
+      title: t("skills.tools"),
+      icon: <Cloud className="w-8 h-8 text-[hsl(var(--interactive))]" />,
+      skills: [
+        "AWS",
+        "Docker",
+        "Git",
+        "CI/CD",
+        "Kubernetes",
+        "Vercel",
+        "Figma",
+      ],
+    },
+  ];
 
   // Calculate heights
   const maxSkills = Math.max(
@@ -94,20 +104,15 @@ const Skills = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">Technical Skills</h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">
+            {t("skills.title")}
+          </h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            A comprehensive toolkit built through years of hands-on experience
-            with modern web technologies and best practices.
+            {t("skills.subtitle")}
           </p>
         </div>
 
-        <div
-          className="grid md:grid-cols-3 gap-6 md:gap-8"
-          style={{
-            minHeight: isDesktop ? `${maxCardHeight}px` : "auto",
-            gridAutoRows: isDesktop ? "1fr" : "auto",
-          }}
-        >
+        <div className="grid md:grid-cols-3 gap-fluid">
           {skillCategories.map((category, categoryIndex) => {
             const isExpanded = expanded.includes(categoryIndex);
             const isAnimatingOut = animatingOut.includes(categoryIndex);
@@ -190,7 +195,7 @@ const Skills = () => {
                     >
                       <div className="mt-4 text-center">
                         <span className="text-sm text-[hsl(var(--interactive))] font-medium">
-                          +{category.skills.length - 3} more
+                          +{category.skills.length - 3} {t("skills.more")}
                         </span>
                       </div>
                     </div>
@@ -200,18 +205,20 @@ const Skills = () => {
             );
           })}
         </div>
-      </div>
 
-      <button
-        onClick={scrollToNext}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        aria-label="Scroll to next section"
-      >
-        <ChevronDown
-          size={32}
-          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-        />
-      </button>
+        <div className="text-center mt-16">
+          <button
+            onClick={scrollToNext}
+            className="animate-bounce hover:scale-110 transition-transform cursor-pointer"
+            aria-label="Scroll to next section"
+          >
+            <ChevronDown
+              size={32}
+              className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+            />
+          </button>
+        </div>
+      </div>
     </section>
   );
 };

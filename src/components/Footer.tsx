@@ -1,23 +1,37 @@
 "use client";
 
 import React from "react";
-import { Github, Linkedin, Mail, Heart, Code } from "lucide-react";
-
-const quickLinks = [
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Contact", href: "#contact" },
-];
-
-const services = [
-  "Web Development",
-  "API Development",
-  "Database Design",
-  "Technical Consulting",
-];
+import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Footer = () => {
+  const { t, language } = useLanguage();
+
+  const quickLinks = [
+    { name: t("nav.about"), href: "#about" },
+    { name: t("nav.projects"), href: "#projects" },
+    { name: t("nav.skills"), href: "#skills" },
+    { name: t("nav.contact"), href: "#contact" },
+  ];
+
+  const getServices = () => {
+    return language === "sv"
+      ? [
+          "Webbutveckling",
+          "API-utveckling",
+          "Databasdesign",
+          "Teknisk rådgivning",
+        ]
+      : [
+          "Web Development",
+          "API Development",
+          "Database Design",
+          "Technical Consulting",
+        ];
+  };
+
+  const services = getServices();
+
   return (
     <footer className="bg-[#0A101E] text-slate-300 pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,12 +42,9 @@ const Footer = () => {
               href="#"
               className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent"
             >
-              DevPortfolio
+              {t("footer.brand")}
             </a>
-            <p className="text-slate-400 max-w-xs">
-              Full Stack Developer specializing in modern web technologies and
-              scalable solutions.
-            </p>
+            <p className="text-slate-400 max-w-xs">{t("footer.description")}</p>
             <div className="flex space-x-4">
               <a
                 href="#"
@@ -62,7 +73,7 @@ const Footer = () => {
           {/* Quick Links Column */}
           <div>
             <h3 className="text-lg font-semibold text-white mb-4">
-              Quick Links
+              {t("footer.quickLinks")}
             </h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
@@ -77,7 +88,9 @@ const Footer = () => {
 
           {/* Services Column */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Services</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">
+              {t("footer.services")}
+            </h3>
             <ul className="space-y-2">
               {services.map((service) => (
                 <li key={service}>{service}</li>
@@ -88,11 +101,12 @@ const Footer = () => {
 
         <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
           <p>
-            &copy; {new Date().getFullYear()} DevPortfolio. All rights reserved.
+            &copy; {new Date().getFullYear()} {t("footer.brand")}.{" "}
+            {t("footer.copyright")}
           </p>
           <p className="flex items-center mt-4 md:mt-0">
-            Made with <Heart size={16} className="mx-1 text-red-500" /> and lots
-            of coffee
+            {t("footer.madeWith")}{" "}
+            <Heart size={16} className="mx-1 text-red-500" /> and lots of coffee
           </p>
         </div>
       </div>
