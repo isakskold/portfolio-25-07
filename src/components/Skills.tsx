@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { ChevronDown } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ChevronDown, Code, Database, Cloud } from "lucide-react";
 
 const skillCategories = [
   {
     title: "Frontend",
+    icon: <Code className="w-8 h-8 text-[hsl(var(--interactive))]" />,
     skills: [
       "React",
       "TypeScript",
@@ -19,6 +19,7 @@ const skillCategories = [
   },
   {
     title: "Backend",
+    icon: <Database className="w-8 h-8 text-[hsl(var(--interactive))]" />,
     skills: [
       "Node.js",
       "Python",
@@ -31,24 +32,66 @@ const skillCategories = [
   },
   {
     title: "Tools & Cloud",
+    icon: <Cloud className="w-8 h-8 text-[hsl(var(--interactive))]" />,
     skills: ["AWS", "Docker", "Git", "CI/CD", "Kubernetes", "Vercel", "Figma"],
   },
 ];
 
 const Skills = () => {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
   const [expanded, setExpanded] = useState<number[]>([]);
+  const [animatingOut, setAnimatingOut] = useState<number[]>([]);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const scrollToNext = () => {
+    document.getElementById("contact")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkIsDesktop();
+    window.addEventListener("resize", checkIsDesktop);
+
+    return () => window.removeEventListener("resize", checkIsDesktop);
+  }, []);
+
+  // Calculate heights
+  const maxSkills = Math.max(
+    ...skillCategories.map((cat) => cat.skills.length)
+  );
+  const headerHeight = 96;
+  const skillItemHeight = 56;
+  const indicatorHeight = 48;
+  const padding = 64;
+  const maxCardHeight =
+    headerHeight + maxSkills * skillItemHeight + indicatorHeight + padding;
 
   const toggleExpand = (index: number) => {
-    setExpanded((prev) =>
-      prev.includes(index)
+    setExpanded((prev) => {
+      const isCurrentlyExpanded = prev.includes(index);
+
+      if (isCurrentlyExpanded) {
+        setAnimatingOut((current) => [...current, index]);
+        setTimeout(() => {
+          setAnimatingOut((current) => current.filter((i) => i !== index));
+        }, 800);
+      }
+
+      return isCurrentlyExpanded
         ? prev.filter((item) => item !== index)
-        : [...prev, index]
-    );
+        : [...prev, index];
+    });
   };
 
   return (
-    <section id="skills" className="section-padding">
+    <section
+      id="skills"
+      className="section-padding min-h-screen flex flex-col justify-center relative"
+    >
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4">Technical Skills</h2>
@@ -58,91 +101,117 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillCategories.map((category, categoryIndex) => (
-            <div
-              key={categoryIndex}
-              className="p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg flex flex-col"
-            >
-              <h3 className="text-2xl font-bold text-center mb-4">
-                {category.title}
-              </h3>
-              {isDesktop ? (
-                <div className="h-64 overflow-hidden relative">
-                  <div
-                    className={`animate-scroll ${
-                      categoryIndex === 1 ? "animate-scroll-reverse" : ""
-                    }`}
-                    style={
-                      {
-                        "--animation-duration": `${
-                          category.skills.length * 3
-                        }s`,
-                      } as React.CSSProperties
-                    }
-                  >
-                    <div className="pb-3">
-                      <ul className="space-y-3">
-                        {category.skills.map((skill, skillIndex) => (
-                          <li
-                            key={skillIndex}
-                            className="w-fit mx-auto px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium"
-                          >
-                            {skill}
-                          </li>
-                        ))}
-                      </ul>
+        <div
+          className="grid md:grid-cols-3 gap-6 md:gap-8"
+          style={{
+            minHeight: isDesktop ? `${maxCardHeight}px` : "auto",
+            gridAutoRows: isDesktop ? "1fr" : "auto",
+          }}
+        >
+          {skillCategories.map((category, categoryIndex) => {
+            const isExpanded = expanded.includes(categoryIndex);
+            const isAnimatingOut = animatingOut.includes(categoryIndex);
+            const hasMoreSkills = category.skills.length > 3;
+
+            const skillsToShow =
+              isExpanded || isAnimatingOut
+                ? category.skills
+                : category.skills.slice(0, 3);
+
+            return (
+              <div
+                key={categoryIndex}
+                className={`flex ${
+                  isDesktop
+                    ? "items-center justify-center"
+                    : "items-start justify-center"
+                }`}
+                style={{
+                  minHeight: isDesktop ? `${maxCardHeight}px` : "auto",
+                }}
+              >
+                <button
+                  onClick={() => hasMoreSkills && toggleExpand(categoryIndex)}
+                  className={`group w-full p-6 md:p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg border-2 transition-all duration-800 ease-out text-left flex flex-col ${
+                    hasMoreSkills
+                      ? "border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+                      : "border-[hsl(var(--border))] cursor-default"
+                  }`}
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-6 flex-shrink-0">
+                    <div className="flex items-center gap-4">
+                      <div>{category.icon}</div>
+                      <h3 className="text-xl md:text-2xl font-bold">
+                        {category.title}
+                      </h3>
                     </div>
-                    <div className="pb-3" aria-hidden="true">
-                      <ul className="space-y-3">
-                        {category.skills.map((skill, skillIndex) => (
-                          <li
+                    {hasMoreSkills && (
+                      <ChevronDown
+                        className={`w-5 h-5 text-[hsl(var(--interactive))] transition-transform duration-800 ease-out ${
+                          isExpanded ? "rotate-180" : ""
+                        } group-hover:scale-110`}
+                      />
+                    )}
+                  </div>
+
+                  {/* Skills List with Smooth Height Transition */}
+                  <div className="overflow-hidden">
+                    <div
+                      className="transition-all duration-800 ease-out"
+                      style={{
+                        maxHeight: isExpanded
+                          ? `${category.skills.length * 56}px`
+                          : `${Math.min(3, category.skills.length) * 56}px`,
+                      }}
+                    >
+                      <div className="space-y-3">
+                        {skillsToShow.map((skill, skillIndex) => (
+                          <div
                             key={skillIndex}
-                            className="w-fit mx-auto px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium"
+                            className="px-4 py-2 bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] rounded-full text-sm font-medium text-center border border-[hsl(var(--border))]/30 transition-colors group-hover:bg-[hsl(var(--secondary))]/80"
                           >
                             {skill}
-                          </li>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <>
-                  <ul className="space-y-3 text-center">
-                    {(expanded.includes(categoryIndex)
-                      ? category.skills
-                      : category.skills.slice(0, 3)
-                    ).map((skill, skillIndex) => (
-                      <li
-                        key={skillIndex}
-                        className="inline-block mx-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full font-medium"
-                      >
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
-                  {category.skills.length > 3 && (
-                    <button
-                      onClick={() => toggleExpand(categoryIndex)}
-                      className="mt-4 mx-auto flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))]"
+
+                  {/* Expand indicator */}
+                  <div className="overflow-hidden">
+                    <div
+                      className="transition-all duration-600 ease-out"
+                      style={{
+                        maxHeight:
+                          hasMoreSkills && !isExpanded ? "32px" : "0px",
+                        opacity: hasMoreSkills && !isExpanded ? 1 : 0,
+                      }}
                     >
-                      {expanded.includes(categoryIndex)
-                        ? "Show Less"
-                        : "Show More"}
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          expanded.includes(categoryIndex) ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                  )}
-                </>
-              )}
-            </div>
-          ))}
+                      <div className="mt-4 text-center">
+                        <span className="text-sm text-[hsl(var(--interactive))] font-medium">
+                          +{category.skills.length - 3} more
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
+
+      <button
+        onClick={scrollToNext}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
+        aria-label="Scroll to next section"
+      >
+        <ChevronDown
+          size={32}
+          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+        />
+      </button>
     </section>
   );
 };

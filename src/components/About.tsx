@@ -1,9 +1,15 @@
 "use client";
 
 import React from "react";
-import { Code, Database, Globe, Zap } from "lucide-react";
+import { Code, Database, Globe, Zap, ChevronDown } from "lucide-react";
 
 const About = () => {
+  const scrollToNext = () => {
+    document.getElementById("projects")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   const highlights = [
     {
       icon: <Code className="w-8 h-8 text-blue-500" />,
@@ -28,7 +34,10 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="section-padding bg-[hsl(var(--secondary))]">
+    <section
+      id="about"
+      className="section-padding bg-[hsl(var(--secondary))] min-h-screen flex flex-col justify-center relative"
+    >
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4">About Me</h2>
@@ -62,7 +71,7 @@ const About = () => {
             {highlights.map((item, index) => (
               <div
                 key={index}
-                className="p-6 bg-[hsl(var(--card))] rounded-xl hover-lift"
+                className="p-6 bg-[hsl(var(--card))] rounded-xl hover-lift border-2 border-[hsl(var(--interactive))]/20 hover:border-[hsl(var(--interactive))]/40 transition-colors"
               >
                 <div className="mb-4">{item.icon}</div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
@@ -74,6 +83,17 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      <button
+        onClick={scrollToNext}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
+        aria-label="Scroll to next section"
+      >
+        <ChevronDown
+          size={32}
+          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+        />
+      </button>
     </section>
   );
 };

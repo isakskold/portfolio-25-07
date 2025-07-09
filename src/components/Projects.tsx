@@ -1,7 +1,14 @@
 "use client";
 
 import React from "react";
-import { Code, Database, Smartphone, ExternalLink, Github } from "lucide-react";
+import {
+  Code,
+  Database,
+  Smartphone,
+  ExternalLink,
+  Github,
+  ChevronDown,
+} from "lucide-react";
 
 const projects = [
   {
@@ -71,8 +78,17 @@ const getIcon = (category: string) => {
 };
 
 const Projects = () => {
+  const scrollToNext = () => {
+    document.getElementById("skills")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
-    <section id="projects" className="section-padding">
+    <section
+      id="projects"
+      className="section-padding min-h-screen flex flex-col justify-center relative"
+    >
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold mb-4">Featured Projects</h2>
@@ -96,7 +112,7 @@ const Projects = () => {
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover rounded-xl shadow-lg hover-lift"
+                  className="w-full h-full object-cover rounded-xl shadow-lg hover-lift border-2 border-[hsl(var(--interactive))]/20"
                 />
               </div>
 
@@ -133,7 +149,7 @@ const Projects = () => {
                     {project.technologies.map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] rounded-full text-sm font-medium"
+                        className="px-3 py-1 bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] rounded-full text-sm font-medium border border-[hsl(var(--interactive))]/30"
                       >
                         {tech}
                       </span>
@@ -144,14 +160,14 @@ const Projects = () => {
                 <div className="flex gap-4">
                   <a
                     href={project.liveUrl}
-                    className="flex items-center gap-2 bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] px-6 py-3 rounded-lg font-semibold hover-lift"
+                    className="flex items-center gap-2 bg-[hsl(var(--interactive))] text-[hsl(var(--interactive-foreground))] px-6 py-3 rounded-lg font-semibold hover-lift"
                   >
                     <ExternalLink size={18} />
                     Live Demo
                   </a>
                   <a
                     href={project.githubUrl}
-                    className="flex items-center gap-2 border border-[hsl(var(--border))] text-[hsl(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover-lift"
+                    className="flex items-center gap-2 border-2 border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 text-[hsl(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover-lift transition-colors"
                   >
                     <Github size={18} />
                     Code
@@ -162,6 +178,17 @@ const Projects = () => {
           ))}
         </div>
       </div>
+
+      <button
+        onClick={scrollToNext}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
+        aria-label="Scroll to next section"
+      >
+        <ChevronDown
+          size={32}
+          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+        />
+      </button>
     </section>
   );
 };

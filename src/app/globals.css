@@ -27,6 +27,8 @@
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
+    --interactive: 24 100% 50%;
+    --interactive-foreground: 210 40% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 240 5.9% 90%;
@@ -50,6 +52,8 @@
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 210 40% 98%;
+    --interactive: 24 100% 55%;
+    --interactive-foreground: 240 5.9% 10%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 240 3.7% 15.9%;
@@ -82,18 +86,4 @@
   .section-padding {
     @apply py-20 px-4 sm:px-6 lg:px-8;
   }
-}
-
-@keyframes scroll {
-  to {
-    transform: translateY(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll var(--animation-duration, 20s) linear infinite;
-}
-
-.animate-scroll-reverse {
-  animation-direction: reverse;
 }

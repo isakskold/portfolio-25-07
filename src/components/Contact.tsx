@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Github,
   Linkedin,
+  ChevronUp,
 } from "lucide-react";
 
 const sections = [
@@ -47,10 +48,17 @@ const whyWorkWithMe = [
 ];
 
 const Contact = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="contact"
-      className="section-padding bg-[hsl(var(--secondary))]"
+      className="section-padding bg-[hsl(var(--secondary))] min-h-screen flex flex-col justify-center relative"
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
@@ -65,8 +73,8 @@ const Contact = () => {
           <div className="lg:col-span-1">
             <div className="space-y-8">
               <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-[hsl(var(--primary))]" />
+                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
+                  <Mail className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Email</h3>
@@ -79,8 +87,8 @@ const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-[hsl(var(--primary))]" />
+                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
+                  <Phone className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Phone</h3>
@@ -93,8 +101,8 @@ const Contact = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-[hsl(var(--primary))]" />
+                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
+                  <MapPin className="w-6 h-6 text-[hsl(var(--interactive))]" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Location</h3>
@@ -110,18 +118,18 @@ const Contact = () => {
             <div className="mt-8 flex space-x-4">
               <a
                 href="#"
-                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))]"
               >
                 <Github />
               </a>
               <a
                 href="#"
-                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]"
+                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))]"
               >
                 <Linkedin />
               </a>
             </div>
-            <div className="mt-12 p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg">
+            <div className="mt-12 p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg border-2 border-[hsl(var(--interactive))]/20">
               <h3 className="text-xl font-bold mb-4">Why Work With Me?</h3>
               <ul className="space-y-3">
                 {whyWorkWithMe.map((item, index) => (
@@ -135,7 +143,7 @@ const Contact = () => {
           </div>
 
           <div className="lg:col-span-2">
-            <div className="p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg h-full flex flex-col justify-center">
+            <div className="p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg h-full flex flex-col justify-center border-2 border-[hsl(var(--interactive))]/20">
               <div className="space-y-12">
                 {sections.map((section, index) => (
                   <div
@@ -147,7 +155,7 @@ const Contact = () => {
                         index % 2 !== 0 ? "md:order-last" : ""
                       }`}
                     >
-                      <section.icon className="w-20 h-20 text-[hsl(var(--primary))]" />
+                      <section.icon className="w-20 h-20 text-[hsl(var(--interactive))]" />
                     </div>
                     <div
                       className={`flex-grow text-center ${
@@ -177,6 +185,17 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      <button
+        onClick={scrollToTop}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
+        aria-label="Scroll to top"
+      >
+        <ChevronUp
+          size={32}
+          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
+        />
+      </button>
     </section>
   );
 };
