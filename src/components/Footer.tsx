@@ -10,7 +10,6 @@ const Footer = () => {
   const quickLinks = [
     { name: t("nav.about"), href: "#about" },
     { name: t("nav.projects"), href: "#projects" },
-    { name: t("nav.skills"), href: "#skills" },
     { name: t("nav.contact"), href: "#contact" },
   ];
 
@@ -45,29 +44,6 @@ const Footer = () => {
               {t("footer.brand")}
             </a>
             <p className="text-slate-400 max-w-xs">{t("footer.description")}</p>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="text-slate-400 hover:text-white"
-                aria-label="GitHub"
-              >
-                <Github size={20} />
-              </a>
-              <a
-                href="#"
-                className="text-slate-400 hover:text-white"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={20} />
-              </a>
-              <a
-                href="mailto:hello@developer.com"
-                className="text-slate-400 hover:text-white"
-                aria-label="Email"
-              >
-                <Mail size={20} />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links Column */}
@@ -103,10 +79,6 @@ const Footer = () => {
           <p>
             &copy; {new Date().getFullYear()} {t("footer.brand")}.{" "}
             {t("footer.copyright")}
-          </p>
-          <p className="flex items-center mt-4 md:mt-0">
-            {t("footer.madeWith")}{" "}
-            <Heart size={16} className="mx-1 text-red-500" /> and lots of coffee
           </p>
         </div>
       </div>

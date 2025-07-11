@@ -71,6 +71,18 @@
 }
 
 @layer utilities {
+  /* Ensure sections offset when scrolled into view */
+  section[id] {
+    scroll-margin-top: calc(
+      var(--header-height, 80px) + 8px
+    ); /* header + small gap */
+  }
+
+  /* Prevent hero content from being hidden behind the fixed header */
+  #hero {
+    padding-top: calc(var(--header-height, 80px) + 16px);
+  }
+
   .gradient-text {
     @apply bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent;
   }
@@ -84,7 +96,7 @@
     @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
   }
   .section-padding {
-    padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 2.5rem);
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 5vw, 2.5rem);
   }
   .gap-fluid {
     gap: clamp(1rem, 4vw, 2rem);
@@ -105,5 +117,13 @@
 
   .text-responsive-p {
     font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  }
+
+  .section-fullheight {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
   }
 }

@@ -1,38 +1,33 @@
 "use client";
 
 import React from "react";
-import { Code, Database, Globe, Zap, ChevronDown } from "lucide-react";
+import { Code, Database, Cloud, ShieldCheck } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { IconCard } from "@/components/ui";
 
 const About = () => {
   const { t } = useLanguage();
 
-  const scrollToNext = () => {
-    document.getElementById("projects")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   const highlights = [
     {
       icon: <Code className="w-8 h-8 text-blue-500" />,
-      title: t("about.highlights.frontend.title"),
-      description: t("about.highlights.frontend.description"),
+      title: t("about.highlights.frontend.title") as string,
+      description: t("about.highlights.frontend.description") as string,
     },
     {
       icon: <Database className="w-8 h-8 text-green-500" />,
-      title: t("about.highlights.backend.title"),
-      description: t("about.highlights.backend.description"),
+      title: t("about.highlights.backend.title") as string,
+      description: t("about.highlights.backend.description") as string,
     },
     {
-      icon: <Globe className="w-8 h-8 text-purple-500" />,
-      title: t("about.highlights.fullstack.title"),
-      description: t("about.highlights.fullstack.description"),
+      icon: <Cloud className="w-8 h-8 text-purple-500" />,
+      title: t("about.highlights.fullstack.title") as string,
+      description: t("about.highlights.fullstack.description") as string,
     },
     {
-      icon: <Zap className="w-8 h-8 text-yellow-500" />,
-      title: t("about.highlights.performance.title"),
-      description: t("about.highlights.performance.description"),
+      icon: <ShieldCheck className="w-8 h-8 text-red-500" />,
+      title: t("about.highlights.performance.title") as string,
+      description: t("about.highlights.performance.description") as string,
     },
   ];
 
@@ -42,7 +37,7 @@ const About = () => {
       className="section-padding bg-[hsl(var(--secondary))] min-h-screen flex flex-col justify-center relative"
     >
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-24">
           <h2 className="font-bold mb-4 text-responsive-h2">
             {t("about.title")}
           </h2>
@@ -60,32 +55,19 @@ const About = () => {
 
           <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-fluid">
             {highlights.map((item, index) => (
-              <div
+              <IconCard
                 key={index}
-                className="p-6 bg-[hsl(var(--card))] rounded-xl hover-lift border-2 border-[hsl(var(--interactive))]/20 hover:border-[hsl(var(--interactive))]/40 transition-colors"
-              >
-                <div className="mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-[hsl(var(--muted-foreground))]">
-                  {item.description}
-                </p>
-              </div>
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+                variant="interactive"
+                hover={true}
+              />
             ))}
           </div>
         </div>
 
-        <div className="text-center mt-16">
-          <button
-            onClick={scrollToNext}
-            className="animate-bounce hover:scale-110 transition-transform cursor-pointer"
-            aria-label="Scroll to next section"
-          >
-            <ChevronDown
-              size={32}
-              className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-            />
-          </button>
-        </div>
+        {/* Removed individual scroll button */}
       </div>
     </section>
   );

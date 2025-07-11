@@ -1,15 +1,23 @@
 "use client";
 
 import React from "react";
-import {
-  Code,
-  Database,
-  Smartphone,
-  ExternalLink,
-  Github,
-  ChevronDown,
-} from "lucide-react";
+import { Code, Database, Smartphone, ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { LinkButton, TechnologyBadge, FeatureListItem } from "@/components/ui";
+import { projectsTranslations } from "@/lib/projects";
+
+type Project = {
+  category: string;
+  title: string;
+  description: string;
+  features: string[];
+  technologies: string[];
+  image: string;
+  liveUrl: string;
+  githubUrl: string;
+  buttonText: string;
+  showGithub: boolean;
+};
 
 const getIcon = (category: string) => {
   switch (category) {
@@ -27,92 +35,54 @@ const getIcon = (category: string) => {
 const Projects = () => {
   const { t, language } = useLanguage();
 
-  const scrollToNext = () => {
-    document.getElementById("skills")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   // Define projects with proper feature arrays based on language
-  const getProjects = () => {
-    const ecommerceFeatures =
-      language === "sv"
-        ? [
-            "Betalningsintegration",
-            "Realtidsuppdateringar",
-            "Adminpanel",
-            "Mobilresponsiv",
-          ]
-        : [
-            "Payment Integration",
-            "Real-time Updates",
-            "Admin Dashboard",
-            "Mobile Responsive",
-          ];
-
-    const saasFeatures =
-      language === "sv"
-        ? [
-            "Realtidssamarbete",
-            "Filhantering",
-            "Avancerad analys",
-            "Teamarbetsytor",
-          ]
-        : [
-            "Real-time Collaboration",
-            "File Management",
-            "Advanced Analytics",
-            "Team Workspaces",
-          ];
-
-    const dashboardFeatures =
-      language === "sv"
-        ? [
-            "Interaktiva diagram",
-            "Realtidsdata",
-            "Anpassade rapporter",
-            "Dataexport",
-          ]
-        : [
-            "Interactive Charts",
-            "Real-time Data",
-            "Custom Reports",
-            "Data Export",
-          ];
+  const getProjects = (): Project[] => {
+    const featuresMap = projectsTranslations[language];
 
     return [
       {
         category: "Full Stack",
-        title: t("projects.ecommerce.title"),
-        description: t("projects.ecommerce.description"),
-        features: ecommerceFeatures,
-        technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Stripe"],
+        title: t("projects.ecommerce.title") as string,
+        description: t("projects.ecommerce.description") as string,
+        features: featuresMap.ecommerce.features,
+        technologies: ["Next.js", "Supabase", "PostgreSQL", "Vercel", "Prisma"],
+        image: "/pngs/pizzaApp.png",
+        liveUrl:
+          "https://digital-payment-saas-git-general-demo-isaks-projects-7661787e.vercel.app/",
+        githubUrl: featuresMap.ecommerce.githubUrl,
+        buttonText: featuresMap.ecommerce.buttonText,
+        showGithub: featuresMap.ecommerce.showGithub,
+      },
+      {
+        category: "CMS",
+        title: t("projects.cms.title") as string,
+        description: t("projects.cms.description") as string,
+        features: featuresMap.cms.features,
+        technologies: ["Next.js", "TypeScript", "AWS", "Authentication", "API"],
         image:
-          "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-        liveUrl: "#",
-        githubUrl: "#",
+          "https://private-user-images.githubusercontent.com/149143560/437310239-2bd3972f-f6b2-44e6-b0a9-686013902477.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTIyNTE0NTIsIm5iZiI6MTc1MjI1MTE1MiwicGF0aCI6Ii8xNDkxNDM1NjAvNDM3MzEwMjM5LTJiZDM5NzJmLWY2YjItNDRlNi1iMGE5LTY4NjAxMzkwMjQ3Ny5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxMVQxNjI1NTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kM2U4YWVkMjJhM2JlZjc0ZDYwM2E5ZmYzNzkyYzMyZjQ4MWE3ZmRmMjNhYWNmYzU4ZjU0YTY4MzUxNzcyYWE0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.u5_Oq7NG7HDfkHvF7eJWIvOroYL6u8r4CMB1l6o-9IQ",
+        liveUrl: "https://cms-ten-snowy.vercel.app/",
+        githubUrl: featuresMap.cms.githubUrl,
+        buttonText: featuresMap.cms.buttonText,
+        showGithub: featuresMap.cms.showGithub,
       },
       {
         category: "SaaS",
-        title: t("projects.saas.title"),
-        description: t("projects.saas.description"),
-        features: saasFeatures,
-        technologies: ["Next.js", "TypeScript", "Prisma", "tRPC", "Vercel"],
-        image:
-          "https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80",
-        liveUrl: "#",
-        githubUrl: "#",
-      },
-      {
-        category: "Data Visualization",
-        title: t("projects.dashboard.title"),
-        description: t("projects.dashboard.description"),
-        features: dashboardFeatures,
-        technologies: ["Vue.js", "D3.js", "Python", "FastAPI", "Redis"],
-        image:
-          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-        liveUrl: "#",
-        githubUrl: "#",
+        title: t("projects.dashboard.title") as string,
+        description: t("projects.dashboard.description") as string,
+        features: featuresMap.dashboard.features,
+        technologies: [
+          "AWS Amplify",
+          "RBAC",
+          "TypeScript",
+          "GraphQL",
+          "TailwindCSS",
+        ],
+        image: "/pngs/oppi.png",
+        liveUrl: "https://opi-early-reg.vercel.app/",
+        githubUrl: featuresMap.dashboard.githubUrl,
+        buttonText: featuresMap.dashboard.buttonText,
+        showGithub: featuresMap.dashboard.showGithub,
       },
     ];
   };
@@ -122,15 +92,15 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="section-padding bg-[hsl(var(--background))]"
+      className="section-padding bg-[hsl(var(--background))] min-h-screen flex flex-col justify-center relative"
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
           <h2 className="font-bold mb-4 text-responsive-h2">
-            {t("projects.title")}
+            {t("projects.title") as string}
           </h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            {t("projects.subtitle")}
+            {t("projects.subtitle") as string}
           </p>
         </div>
 
@@ -160,75 +130,54 @@ const Projects = () => {
 
                 <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
 
-                <p className="text-lg text-[hsl(var(--muted-foreground))] mb-6">
-                  {project.description}
-                </p>
+                <p
+                  className="text-lg text-[hsl(var(--muted-foreground))] mb-6"
+                  dangerouslySetInnerHTML={{ __html: project.description }}
+                ></p>
 
                 <div className="mb-6">
                   <h4 className="font-semibold mb-3">
-                    {t("projects.keyFeatures")}
+                    {t("projects.keyFeatures") as string}
                   </h4>
                   <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
                     {project.features.map((feature, featureIndex) => (
-                      <li
-                        key={featureIndex}
-                        className="flex items-center text-[hsl(var(--muted-foreground))]"
-                      >
-                        <div className="w-2 h-2 bg-[hsl(var(--primary))] rounded-full mr-3 flex-shrink-0"></div>
+                      <FeatureListItem key={featureIndex}>
                         {feature}
-                      </li>
+                      </FeatureListItem>
                     ))}
                   </ul>
                 </div>
 
                 <div className="mb-6">
                   <h4 className="font-semibold mb-3">
-                    {t("projects.technologies")}
+                    {t("projects.technologies") as string}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] rounded-full text-sm font-medium border border-[hsl(var(--interactive))]/30"
-                      >
-                        {tech}
-                      </span>
+                      <TechnologyBadge key={techIndex}>{tech}</TechnologyBadge>
                     ))}
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <a
-                    href={project.liveUrl}
-                    className="flex items-center gap-2 bg-[hsl(var(--interactive))] text-[hsl(var(--interactive-foreground))] px-6 py-3 rounded-lg font-semibold hover-lift"
-                  >
-                    <ExternalLink size={18} />
-                    {t("projects.liveDemo")}
-                  </a>
-                  <a
-                    href={project.githubUrl}
-                    className="flex items-center gap-2 border-2 border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 text-[hsl(var(--foreground))] px-6 py-3 rounded-lg font-semibold hover-lift transition-colors"
-                  >
-                    <Github size={18} />
-                    {t("projects.code")}
-                  </a>
+                  <LinkButton href={project.liveUrl} variant="primary" external>
+                    <ExternalLink size={18} className="mr-2" />
+                    {project.buttonText}
+                  </LinkButton>
+                  {project.showGithub && (
+                    <LinkButton
+                      href={project.githubUrl}
+                      variant="secondary"
+                      external
+                    >
+                      <Github size={18} className="mr-2" />
+                      {t("projects.code") as string}
+                    </LinkButton>
+                  )}
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center mt-24">
-          <button
-            onClick={scrollToNext}
-            className="animate-bounce hover:scale-110 transition-transform cursor-pointer"
-            aria-label="Scroll to next section"
-          >
-            <ChevronDown
-              size={32}
-              className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-            />
-          </button>
         </div>
       </div>
     </section>

@@ -3,10 +3,11 @@ import "./globals.css";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import { detectLanguageFromHeaders } from "@/lib/translations";
 import { headers } from "next/headers";
+import GlobalScrollButton from "@/components/ui/GlobalScrollButton";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "My personal portfolio",
+  title: "Isak Sköld - Portfolio",
+  description: "Fullstack web-developer portfolio website",
 };
 
 export default async function RootLayout({
@@ -24,6 +25,8 @@ export default async function RootLayout({
       <body>
         <LanguageProvider initialLanguage={initialLanguage}>
           {children}
+          {/* Global fixed scroll button */}
+          <GlobalScrollButton />
         </LanguageProvider>
       </body>
     </html>

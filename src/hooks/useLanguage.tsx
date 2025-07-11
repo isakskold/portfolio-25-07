@@ -12,7 +12,7 @@ import { Language, getTranslation } from "@/lib/translations";
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string) => string | string[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -58,7 +58,7 @@ export const LanguageProvider = ({
     }
   };
 
-  const t = (key: string): string => {
+  const t = (key: string): string | string[] => {
     // Always return translated text, never placeholder keys
     return getTranslation(key, language);
   };

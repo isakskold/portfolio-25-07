@@ -2,7 +2,6 @@
 
 import {
   Mail,
-  Phone,
   MapPin,
   Briefcase,
   Laptop,
@@ -11,80 +10,37 @@ import {
   ChevronRight,
   Github,
   Linkedin,
-  ChevronUp,
+  ExternalLink,
 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import { Card, IconText, FeatureListItem } from "@/components/ui";
 
 const Contact = () => {
   const { t, language } = useLanguage();
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // Define sections with proper arrays based on language
+  // Define sections using translation data
   const getSections = () => {
-    const workArrangementItems =
-      language === "sv"
-        ? ["Heltidsroller", "Frilans & kontrakt"]
-        : ["Full-Time Roles", "Freelance & Contract"];
-
-    const locationItems =
-      language === "sv"
-        ? ["Distans", "På plats & flytt-vänlig"]
-        : ["Remote", "Onsite & Relocation-friendly"];
-
-    const expertiseItems =
-      language === "sv"
-        ? [
-            "Frontend-utveckling (React, Next.js, Vue)",
-            "Backend & API:er (REST, GraphQL)",
-            "Databaser (SQL, NoSQL)",
-            "Moln & infrastruktur (AWS, Docker)",
-          ]
-        : [
-            "Frontend Development (React, Next.js, Vue)",
-            "Backend & APIs (REST, GraphQL)",
-            "Databases (SQL, NoSQL)",
-            "Cloud & Infrastructure (AWS, Docker)",
-          ];
-
     return [
       {
-        title: t("contact.workArrangements.title"),
+        title: t("contact.workArrangements.title") as string,
         icon: Briefcase,
-        items: workArrangementItems,
+        items: t("contact.workArrangements.items") as string[],
       },
       {
-        title: t("contact.locationPreference.title"),
+        title: t("contact.locationPreference.title") as string,
         icon: Globe,
-        items: locationItems,
+        items: t("contact.locationPreference.items") as string[],
       },
       {
-        title: t("contact.expertise.title"),
+        title: t("contact.expertise.title") as string,
         icon: Laptop,
-        items: expertiseItems,
+        items: t("contact.expertise.items") as string[],
       },
     ];
   };
 
   const getWhyWorkWithMe = () => {
-    return language === "sv"
-      ? [
-          "5+ års professionell erfarenhet",
-          "100+ framgångsrikt levererade projekt",
-          "Ren, underhållbar kod",
-          "Garanti för leverans i tid",
-        ]
-      : [
-          "5+ years of professional experience",
-          "100+ successful projects delivered",
-          "Clean, maintainable code",
-          "On-time delivery guarantee",
-        ];
+    return t("contact.whyWorkItems") as string[];
   };
 
   const sections = getSections();
@@ -107,81 +63,74 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-1">
-            <div className="space-y-8">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
-                  <Mail className="w-6 h-6 text-[hsl(var(--interactive))]" />
+            <div className="space-y-6">
+              <a href="mailto:isaksfrontend@gmail.com" className="block">
+                <div className="p-4 rounded-xl border-2 border-[hsl(var(--interactive))]/20 bg-[hsl(var(--card))] hover:bg-[hsl(var(--muted))] hover:border-[hsl(var(--interactive))]/40 hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer relative group">
+                  <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
+                  <IconText
+                    icon={Mail}
+                    title={t("contact.email") as string}
+                    subtitle="isaksfrontend@gmail.com"
+                    description={t("contact.emailText") as string}
+                  />
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-1">{t("contact.email")}</h3>
-                  <p className="text-[hsl(var(--muted-foreground))]">
-                    hello@developer.com
-                  </p>
-                  <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    {t("contact.emailText")}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
-                  <Phone className="w-6 h-6 text-[hsl(var(--interactive))]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">{t("contact.phone")}</h3>
-                  <p className="text-[hsl(var(--muted-foreground))]">
-                    +1 (555) 123-4567
-                  </p>
-                  <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    {t("contact.phoneText")}
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-[hsl(var(--interactive))]/10 rounded-lg flex items-center justify-center border border-[hsl(var(--interactive))]/30">
-                  <MapPin className="w-6 h-6 text-[hsl(var(--interactive))]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">
-                    {t("contact.location")}
-                  </h3>
-                  <p className="text-[hsl(var(--muted-foreground))]">
-                    San Francisco, CA
-                  </p>
-                  <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                    {t("contact.locationText")}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-8 flex space-x-4">
-              <a
-                href="#"
-                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))]"
-              >
-                <Github />
               </a>
               <a
-                href="#"
-                className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))]"
+                href="https://www.linkedin.com/in/isak-sk%C3%B6ld-3b7a0b28a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
               >
-                <Linkedin />
+                <div className="p-4 rounded-xl border-2 border-[hsl(var(--interactive))]/20 bg-[hsl(var(--card))] hover:bg-[hsl(var(--muted))] hover:border-[hsl(var(--interactive))]/40 hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer relative group">
+                  <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
+                  <IconText
+                    icon={Linkedin}
+                    title={t("contact.linkedin") as string}
+                    subtitle="LinkedIn Profile"
+                    description={t("contact.linkedinText") as string}
+                  />
+                </div>
+              </a>
+              <a
+                href="https://github.com/isakskold"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <div className="p-4 rounded-xl border-2 border-[hsl(var(--interactive))]/20 bg-[hsl(var(--card))] hover:bg-[hsl(var(--muted))] hover:border-[hsl(var(--interactive))]/40 hover:shadow-lg transition-all duration-300 transform hover:scale-105 cursor-pointer relative group">
+                  <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
+                  <IconText
+                    icon={Github}
+                    title={t("contact.github") as string}
+                    subtitle="GitHub Profile"
+                    description={t("contact.githubText") as string}
+                  />
+                </div>
               </a>
             </div>
-            <div className="mt-12 p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg border-2 border-[hsl(var(--interactive))]/20">
+
+            <Card variant="interactive" className="mt-12" padding="lg">
               <h3 className="text-xl font-bold mb-4">{t("contact.whyWork")}</h3>
               <ul className="space-y-3">
                 {whyWorkWithMe.map((item, index) => (
-                  <li key={index} className="flex items-center">
-                    <CheckCircle className="w-5 h-5 mr-3 text-green-500 flex-shrink-0" />
-                    <span>{item}</span>
-                  </li>
+                  <FeatureListItem
+                    key={index}
+                    icon={CheckCircle}
+                    className="text-green-500"
+                  >
+                    {item}
+                  </FeatureListItem>
                 ))}
               </ul>
-            </div>
+            </Card>
           </div>
 
           <div className="lg:col-span-2">
-            <div className="p-8 bg-[hsl(var(--card))] rounded-xl shadow-lg h-full flex flex-col justify-center border-2 border-[hsl(var(--interactive))]/20">
+            <Card
+              variant="interactive"
+              className="h-full flex flex-col justify-center"
+              padding="lg"
+            >
               <div className="space-y-12">
                 {sections.map((section, index) => (
                   <div
@@ -209,31 +158,21 @@ const Contact = () => {
                         }`}
                       >
                         {section.items.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-center">
-                            <ChevronRight className="w-5 h-5 mr-2 text-[hsl(var(--primary))] flex-shrink-0" />
-                            <span>{item}</span>
-                          </li>
+                          <FeatureListItem key={itemIndex} icon={ChevronRight}>
+                            {item}
+                          </FeatureListItem>
                         ))}
                       </ul>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
+            </Card>
           </div>
         </div>
       </div>
 
-      <button
-        onClick={scrollToTop}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hover:scale-110 transition-transform cursor-pointer"
-        aria-label="Scroll to top"
-      >
-        <ChevronUp
-          size={32}
-          className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]"
-        />
-      </button>
+      {/* Removed individual ScrollUpButton */}
     </section>
   );
 };
