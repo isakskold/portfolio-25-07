@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Menu, X } from "lucide-react";
-import { LanguageButton, IconButton } from "@/components/ui";
+import { IconButton } from "@/components/ui";
 import ReactCountryFlag from "react-country-flag";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";

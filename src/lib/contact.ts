@@ -27,7 +27,7 @@ export const contactTranslations = {
     expertise: {
       title: "What I work with",
       items: [
-        "Frontend stuff (React, Next.js, TypeScript, TailwindCSS)",
+        "Front-end development (React, Next.js, TypeScript, TailwindCSS)",
         "Backend & APIs (Node.js, REST, GraphQL)",
         "Databases (PostgreSQL, DynamoDB, Supabase, Firebase)",
         "Deployment & hosting (Vercel, AWS, Netlify)",
@@ -62,7 +62,7 @@ export const contactTranslations = {
     expertise: {
       title: "Vad jag jobbar med",
       items: [
-        "Frontend-grejer (React, Next.js, TypeScript, TailwindCSS)",
+        "Frontend-utveckling (React, Next.js, TypeScript, TailwindCSS)",
         "Backend & API:er (Node.js, REST, GraphQL)",
         "Databaser (PostgreSQL, DynamoDB, Supabase, Firebase)",
         "Deployment & hosting (Vercel, AWS, Netlify)",

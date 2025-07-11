@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Code, Database, Smartphone, ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { LinkButton, TechnologyBadge, FeatureListItem } from "@/components/ui";
@@ -59,8 +60,7 @@ const Projects = () => {
         description: t("projects.cms.description") as string,
         features: featuresMap.cms.features,
         technologies: ["Next.js", "TypeScript", "AWS", "Authentication", "API"],
-        image:
-          "https://private-user-images.githubusercontent.com/149143560/437310239-2bd3972f-f6b2-44e6-b0a9-686013902477.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTIyNTE0NTIsIm5iZiI6MTc1MjI1MTE1MiwicGF0aCI6Ii8xNDkxNDM1NjAvNDM3MzEwMjM5LTJiZDM5NzJmLWY2YjItNDRlNi1iMGE5LTY4NjAxMzkwMjQ3Ny5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNzExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDcxMVQxNjI1NTJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kM2U4YWVkMjJhM2JlZjc0ZDYwM2E5ZmYzNzkyYzMyZjQ4MWE3ZmRmMjNhYWNmYzU4ZjU0YTY4MzUxNzcyYWE0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.u5_Oq7NG7HDfkHvF7eJWIvOroYL6u8r4CMB1l6o-9IQ",
+        image: "/pngs/CMS.png",
         liveUrl: "https://cms-ten-snowy.vercel.app/",
         githubUrl: featuresMap.cms.githubUrl,
         buttonText: featuresMap.cms.buttonText,
@@ -111,14 +111,17 @@ const Projects = () => {
               className={`grid lg:grid-cols-2 gap-12 items-center`}
             >
               <div
-                className={`w-full h-80 ${
+                className={`relative w-full h-80 ${
                   index % 2 === 1 ? "lg:order-last" : ""
                 }`}
               >
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover rounded-xl shadow-lg hover-lift border-2 border-[hsl(var(--interactive))]/20"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover rounded-xl shadow-lg hover-lift border-2 border-[hsl(var(--interactive))]/20"
+                  priority={index === 0}
                 />
               </div>
 
@@ -161,7 +164,7 @@ const Projects = () => {
 
                 <div className="flex gap-4">
                   <LinkButton href={project.liveUrl} variant="primary" external>
-                    <ExternalLink size={18} className="mr-2" />
+                    <ExternalLink size={18} />
                     {project.buttonText}
                   </LinkButton>
                   {project.showGithub && (
@@ -170,7 +173,7 @@ const Projects = () => {
                       variant="secondary"
                       external
                     >
-                      <Github size={18} className="mr-2" />
+                      <Github size={18} />
                       {t("projects.code") as string}
                     </LinkButton>
                   )}

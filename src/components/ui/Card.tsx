@@ -134,7 +134,6 @@ export const SkillsCard: React.FC<{
   icon: React.ReactNode;
   children: React.ReactNode;
   isExpandable?: boolean;
-  isExpanded?: boolean;
   onToggle?: () => void;
   className?: string;
 }> = ({
@@ -142,7 +141,6 @@ export const SkillsCard: React.FC<{
   icon,
   children,
   isExpandable = false,
-  isExpanded = false,
   onToggle,
   className = "",
 }) => {

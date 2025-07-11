@@ -117,7 +117,7 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
       ? "hover-lift"
       : "";
 
-  const buttonClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${hoverEffect} ${className} text-center inline-block`;
+  const buttonClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${hoverEffect} ${className} inline-flex items-center justify-center gap-2 text-center`;
 
   if (disabled) {
     return (

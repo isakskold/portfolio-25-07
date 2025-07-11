@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 
 const Footer = () => {
   const { t, language } = useLanguage();
 
   const quickLinks = [
-    { name: t("nav.about"), href: "#about" },
-    { name: t("nav.projects"), href: "#projects" },
-    { name: t("nav.contact"), href: "#contact" },
+    { name: t("nav.about") as string, href: "#about" },
+    { name: t("nav.projects") as string, href: "#projects" },
+    { name: t("nav.contact") as string, href: "#contact" },
   ];
 
   const getServices = () => {

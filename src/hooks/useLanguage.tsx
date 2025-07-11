@@ -40,11 +40,8 @@ export const LanguageProvider = ({
 }) => {
   // Start with server-detected language
   const [language, setLanguageState] = useState<Language>(initialLanguage);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    // Mark as hydrated and check localStorage
-    setIsHydrated(true);
     const storedLang = getStoredLanguage();
     if (storedLang && storedLang !== initialLanguage) {
       setLanguageState(storedLang);

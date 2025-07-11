@@ -2,7 +2,6 @@
 
 import {
   Mail,
-  MapPin,
   Briefcase,
   Laptop,
   Globe,
@@ -16,7 +15,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Card, IconText, FeatureListItem } from "@/components/ui";
 
 const Contact = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   // Define sections using translation data
   const getSections = () => {
