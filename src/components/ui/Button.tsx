@@ -59,13 +59,13 @@ const getSizeClasses = (size: string, variant: string) => {
 
   switch (size) {
     case "sm":
-      return "px-4 py-2 text-xs sm:text-sm";
+      return "px-3 py-1.5 text-xs";
     case "md":
-      return "px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-xs sm:text-sm md:text-base";
+      return "px-4 sm:px-6 py-2 sm:py-2.5 text-sm";
     case "lg":
-      return "px-6 py-3 text-base sm:text-lg";
+      return "px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base";
     default:
-      return "px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-xs sm:text-sm md:text-base";
+      return "px-4 sm:px-6 py-2 sm:py-2.5 text-sm";
   }
 };
 
@@ -166,7 +166,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       ? "transition-transform cursor-pointer"
       : "transition-colors";
 
-  const iconSize = size === "lg" ? 32 : size === "sm" ? 20 : 24;
+  const iconSize = size === "lg" ? 28 : size === "sm" ? 18 : 22;
 
   return (
     <button

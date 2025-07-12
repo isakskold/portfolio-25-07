@@ -42,10 +42,10 @@ const HeroClient = ({
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center text-center px-4"
+      className="relative flex flex-col items-center justify-center text-center px-4"
     >
       <div className="container mx-auto">
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-4 sm:space-y-6">
           <h1 className="font-bold text-responsive-h1">
             <span className="block text-[hsl(var(--foreground))]">{title}</span>
             <span className="gradient-text">{subtitle}</span>
@@ -61,7 +61,7 @@ const HeroClient = ({
             </LinkButton>
             <Tooltip content="Coming soon" position="top">
               <LinkButton
-                href="#" // Add link to resume here
+                href="#"
                 variant="secondary"
                 size="md"
                 disabled={true}
@@ -71,36 +71,33 @@ const HeroClient = ({
             </Tooltip>
           </div>
 
-          <div>
+          <div className="mt-2 sm:mt-4">
             <SocialLinks
               links={mappedSocialLinks}
-              className="justify-center space-x-8"
+              className="justify-center space-x-5 sm:space-x-8"
             />
           </div>
 
           {/* Portrait Section */}
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <div className="relative">
-              <div
-                className="relative rounded-2xl overflow-hidden border-4 border-[hsl(var(--interactive))]/30 shadow-2xl hover-lift"
-                style={{
-                  width: "clamp(8rem, 25vw, 14rem)",
-                  height: "clamp(8rem, 25vw, 14rem)",
-                }}
-              >
+              <div className="relative w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] md:w-[260px] md:h-[260px] lg:w-[300px] lg:h-[300px] xl:w-[340px] xl:h-[340px] rounded-2xl overflow-hidden border-4 border-[hsl(var(--interactive))]/30 shadow-2xl hover-lift">
                 <Image
                   src="/pngs/profilePic.jpg"
-                  alt="Developer Portrait"
+                  alt="Isak Sköld - Full Stack Developer"
                   fill
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  sizes="(max-width: 639px) 200px, (max-width: 767px) 220px, (max-width: 1023px) 260px, (max-width: 1279px) 300px, 340px"
                   className="object-cover object-center transition-transform duration-300 hover:scale-105"
                   style={{
                     imageRendering: "-webkit-optimize-contrast",
                     backfaceVisibility: "hidden",
-                    transform: "scale(1.2)",
+                    transform: "scale(1.1)",
                   }}
                   quality={95}
                   priority
+                  itemProp="image"
+                  itemScope
+                  itemType="https://schema.org/ImageObject"
                 />
               </div>
               {/* Decorative ring */}

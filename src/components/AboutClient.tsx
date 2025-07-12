@@ -38,18 +38,18 @@ const AboutClient = ({
   return (
     <section
       id="about"
-      className="section-padding bg-[hsl(var(--secondary))] min-h-screen flex flex-col justify-center relative"
+      className="section-padding bg-[hsl(var(--secondary))] relative"
     >
       <div className="container mx-auto">
-        <div className="text-center mb-24">
+        <div className="text-center mb-12 md:mb-24">
           <h2 className="font-bold mb-4 text-responsive-h2">{title}</h2>
-          <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-fluid items-start">
-          <div className="lg:col-span-2 space-y-4 text-lg text-[hsl(var(--muted-foreground))]">
+          <div className="lg:col-span-2 space-y-4 text-base md:text-lg text-[hsl(var(--muted-foreground))]">
             <p>{description1}</p>
             <p>{description2}</p>
             <p>{description3}</p>

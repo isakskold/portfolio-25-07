@@ -71,15 +71,17 @@ export const SocialLinks: React.FC<{
   className?: string;
 }> = ({ links, className = "" }) => {
   return (
-    <div className={`flex space-x-4 ${className}`}>
+    <div className={`flex items-center ${className}`}>
       {links.map((link, index) => (
         <a
           key={index}
           href={link.href}
-          className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))]"
+          className="text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--interactive))] p-2"
           aria-label={link.label}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <link.icon size={20} className="sm:w-6 sm:h-6" />
+          <link.icon size={22} className="w-5 h-5 sm:w-6 sm:h-6" />
         </a>
       ))}
     </div>

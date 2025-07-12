@@ -56,12 +56,12 @@ const ContactClient = ({
   return (
     <section
       id="contact"
-      className="section-padding bg-[hsl(var(--secondary))] min-h-screen flex flex-col justify-center relative"
+      className="section-padding bg-[hsl(var(--secondary))] relative"
     >
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="font-bold mb-4 text-responsive-h2">{title}</h2>
-          <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
@@ -114,8 +114,8 @@ const ContactClient = ({
               </a>
             </div>
 
-            <Card variant="interactive" className="mt-12" padding="lg">
-              <h3 className="text-xl font-bold mb-4">{whyWork}</h3>
+            <Card variant="interactive" className="mt-8 md:mt-12" padding="lg">
+              <h3 className="text-lg md:text-xl font-bold mb-4">{whyWork}</h3>
               <ul className="space-y-3">
                 {whyWorkItems.map((item, index) => (
                   <FeatureListItem
@@ -142,7 +142,7 @@ const ContactClient = ({
                   return (
                     <div
                       key={index}
-                      className="flex flex-col md:flex-row items-center gap-8"
+                      className="flex flex-col md:flex-row items-center gap-6 md:gap-8"
                     >
                       <div
                         className={`flex-shrink-0 ${
@@ -150,7 +150,7 @@ const ContactClient = ({
                         }`}
                       >
                         {IconComponent && (
-                          <IconComponent className="w-20 h-20 text-[hsl(var(--interactive))]" />
+                          <IconComponent className="w-16 h-16 md:w-20 md:h-20 text-[hsl(var(--interactive))]" />
                         )}
                       </div>
                       <div
@@ -158,11 +158,11 @@ const ContactClient = ({
                           index % 2 !== 0 ? "md:text-right" : "md:text-left"
                         }`}
                       >
-                        <h4 className="text-2xl font-bold mb-3">
+                        <h4 className="text-xl md:text-2xl font-bold mb-3">
                           {section.title}
                         </h4>
                         <ul
-                          className={`space-y-2 ${
+                          className={`space-y-2 text-sm md:text-base ${
                             index % 2 !== 0 ? "inline-block text-left" : ""
                           }`}
                         >

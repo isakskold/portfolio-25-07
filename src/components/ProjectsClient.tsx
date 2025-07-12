@@ -52,17 +52,17 @@ const ProjectsClient = ({
   return (
     <section
       id="projects"
-      className="section-padding bg-[hsl(var(--background))] min-h-screen flex flex-col justify-center relative"
+      className="section-padding bg-[hsl(var(--background))] relative"
     >
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="font-bold mb-4 text-responsive-h2">{title}</h2>
-          <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
             {subtitle}
           </p>
         </div>
 
-        <div className="space-y-24">
+        <div className="space-y-16 md:space-y-24">
           {projects.map((project, index) => (
             <article
               key={index}
@@ -90,16 +90,18 @@ const ProjectsClient = ({
                   <span className="font-medium">{project.category}</span>
                 </div>
 
-                <h3 className="text-3xl font-bold mb-4">{project.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                  {project.title}
+                </h3>
 
                 <p
-                  className="text-lg text-[hsl(var(--muted-foreground))] mb-6"
+                  className="text-base md:text-lg text-[hsl(var(--muted-foreground))] mb-6"
                   dangerouslySetInnerHTML={{ __html: project.description }}
                 ></p>
 
                 <div className="mb-6">
                   <h4 className="font-semibold mb-3">{keyFeatures}</h4>
-                  <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm md:text-base">
                     {project.features.map((feature, featureIndex) => (
                       <FeatureListItem key={featureIndex}>
                         {feature}
@@ -117,7 +119,7 @@ const ProjectsClient = ({
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <LinkButton href={project.liveUrl} variant="primary" external>
                     <ExternalLink size={18} />
                     {project.buttonText}

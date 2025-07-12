@@ -25,6 +25,12 @@ export async function generateMetadata({
     description,
     metadataBase: new URL("https://isakskold.xyz"),
     manifest: "/site.webmanifest",
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      maximumScale: 5,
+      viewportFit: "cover",
+    },
     icons: {
       icon: [
         { url: "/favicon.ico", type: "image/x-icon" },
@@ -55,8 +61,9 @@ export async function generateMetadata({
         {
           url: "https://isakskold.xyz/pngs/profilePic.jpg",
           width: 1200,
-          height: 630,
-          alt: "Isak Sköld",
+          height: 1200,
+          alt: "Isak Sköld - Full Stack Developer",
+          type: "image/jpeg",
         },
       ],
     },
@@ -64,7 +71,14 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["https://isakskold.xyz/pngs/profilePic.jpg"],
+      images: [
+        {
+          url: "https://isakskold.xyz/pngs/profilePic.jpg",
+          alt: "Isak Sköld - Full Stack Developer",
+          width: 1200,
+          height: 1200,
+        },
+      ],
       creator: "@isakskold",
     },
     robots: {
@@ -105,6 +119,17 @@ export default async function RootLayout({
     >
       <head>
         <PortfolioJsonLd locale={locale} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta
+          name="image"
+          content="https://isakskold.xyz/pngs/profilePic.jpg"
+        />
+        <meta
+          itemProp="image"
+          content="https://isakskold.xyz/pngs/profilePic.jpg"
+        />
       </head>
       <body>
         <ThemeProvider>
