@@ -10,15 +10,15 @@ interface BadgeProps {
 const getVariantClasses = (variant: string) => {
   switch (variant) {
     case "default":
-      return "bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border))]/30";
+      return "bg-[#232323] text-white/70 border border-[#333333]/30";
     case "skill":
-      return "bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border))]/30 group-hover:bg-[hsl(var(--secondary))]/80";
+      return "bg-[#232323] text-white/70 border border-[#333333]/30 group-hover:bg-[#282828]";
     case "technology":
-      return "bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] border border-[hsl(var(--interactive))]/30";
+      return "bg-[#232323] text-white/70 border border-[#ff6b00]/30";
     case "feature":
-      return "bg-transparent text-[hsl(var(--muted-foreground))]";
+      return "bg-transparent text-white/70";
     default:
-      return "bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] border border-[hsl(var(--border))]/30";
+      return "bg-[#232323] text-white/70 border border-[#333333]/30";
   }
 };
 

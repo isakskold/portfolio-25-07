@@ -30,13 +30,13 @@ interface ContactCardProps {
 const getVariantClasses = (variant: string) => {
   switch (variant) {
     case "default":
-      return "bg-[hsl(var(--card))] border border-[hsl(var(--border))]";
+      return "bg-[#181818] border border-[#333333]";
     case "interactive":
-      return "bg-[hsl(var(--card))] border-2 border-[hsl(var(--interactive))]/20 hover:border-[hsl(var(--interactive))]/40";
+      return "bg-[#181818] border-2 border-white/10 hover:border-white/20";
     case "secondary":
-      return "bg-[hsl(var(--secondary))] border border-[hsl(var(--border))]/30";
+      return "bg-[#232323] border border-[#333333]/30";
     default:
-      return "bg-[hsl(var(--card))] border border-[hsl(var(--border))]";
+      return "bg-[#181818] border border-[#333333]";
   }
 };
 

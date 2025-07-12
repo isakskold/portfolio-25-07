@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/hooks/useLanguage";
 import GlobalScrollButton from "@/components/ui/GlobalScrollButton";
 import { notFound } from "next/navigation";
 import PortfolioJsonLd from "@/components/PortfolioJsonLd";
+import ThemeProvider from "@/components/ThemeProvider";
 
 export async function generateMetadata({
   params,
@@ -96,16 +97,23 @@ export default async function RootLayout({
   if (!locales.includes(locale)) notFound();
 
   return (
-    <html lang={locale} className="notranslate" translate="no">
+    <html
+      lang={locale}
+      className="notranslate dark"
+      translate="no"
+      style={{ colorScheme: "dark" }}
+    >
       <head>
         <PortfolioJsonLd locale={locale} />
       </head>
       <body>
-        <LanguageProvider initialLanguage={locale as "en" | "sv"}>
-          {children}
-          {/* Global fixed scroll button */}
-          <GlobalScrollButton />
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider initialLanguage={locale as "en" | "sv"}>
+            {children}
+            {/* Global fixed scroll button */}
+            <GlobalScrollButton />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

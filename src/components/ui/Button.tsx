@@ -10,15 +10,15 @@ interface BaseButtonProps {
 }
 
 interface ButtonProps extends BaseButtonProps {
-  variant?: "primary" | "secondary" | "icon" | "language";
-  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "icon" | "language" | "ghost";
+  size?: "sm" | "md" | "lg" | "icon";
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
 }
 
 interface LinkButtonProps extends BaseButtonProps {
-  variant?: "primary" | "secondary" | "icon" | "language";
-  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "icon" | "language" | "ghost";
+  size?: "sm" | "md" | "lg" | "icon";
   href: string;
   external?: boolean;
 }
@@ -36,22 +36,24 @@ interface IconButtonProps {
 const getVariantClasses = (variant: string) => {
   switch (variant) {
     case "primary":
-      return "bg-[hsl(var(--interactive))] text-[hsl(var(--interactive-foreground))] hover:opacity-90";
+      return "bg-[#ff6b00] text-white hover:opacity-90";
     case "secondary":
-      return "border-2 border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 text-[hsl(var(--foreground))] hover:bg-[hsl(var(--interactive))]/5";
+      return "border-2 border-white/30 text-white hover:bg-white/10";
     case "language":
-      return "text-[hsl(var(--foreground))] transition-colors duration-200 hover:bg-[hsl(var(--interactive))]/5";
+      return "text-[hsl(var(--foreground))] transition-colors duration-200 hover:bg-white/10";
     case "icon":
-      return "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]";
+      return "text-[hsl(var(--muted-foreground))] hover:text-white";
     case "scroll":
-      return "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))] animate-bounce hover:scale-110";
+      return "text-[hsl(var(--muted-foreground))] hover:text-white animate-bounce hover:scale-110";
+    case "ghost":
+      return "text-white hover:bg-white/10 bg-transparent";
     default:
-      return "bg-[hsl(var(--interactive))] text-[hsl(var(--interactive-foreground))] hover:opacity-90";
+      return "bg-[#ff6b00] text-white hover:opacity-90";
   }
 };
 
 const getSizeClasses = (size: string, variant: string) => {
-  if (variant === "icon" || variant === "scroll") {
+  if (variant === "icon" || variant === "scroll" || size === "icon") {
     return "p-2";
   }
 

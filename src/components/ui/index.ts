@@ -8,10 +8,11 @@ export { Card, IconCard, ContactCard, SkillsCard } from "./Card";
 export { Badge, FeatureBadge, SkillBadge, TechnologyBadge } from "./Badge";
 
 // Scroll components
-export { ScrollButton, ScrollDownButton, ScrollUpButton } from "./ScrollButton";
+export { default as ScrollButton } from "./ScrollButton";
+export { default as GlobalScrollButton } from "./GlobalScrollButton";
 
 // IconText components
-export { IconText, FeatureListItem, SocialLinks } from "./IconText";
+export { default as IconText, FeatureListItem, SocialLinks } from "./IconText";
 
 // Tooltip components
-export { Tooltip } from "./Tooltip";
+export { default as Tooltip } from "./Tooltip";
