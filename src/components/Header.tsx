@@ -9,16 +9,16 @@ import { useRouter } from "next/navigation";
 import { Button, IconButton } from "@/components/ui";
 import ReactCountryFlag from "react-country-flag";
 
-function debounce<F extends (...args: any[]) => any>(
-  func: F,
+function debounce(
+  func: (hash: string) => void,
   wait: number
-): (...args: Parameters<F>) => void {
+): (hash: string) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
-  return (...args: Parameters<F>) => {
+  return (hash: string) => {
     if (timeout) {
       clearTimeout(timeout);
     }
-    timeout = setTimeout(() => func(...args), wait);
+    timeout = setTimeout(() => func(hash), wait);
   };
 }
 
