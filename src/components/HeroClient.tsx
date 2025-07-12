@@ -2,21 +2,42 @@
 
 import { Github, Linkedin, Mail } from "lucide-react";
 import Image from "next/image";
-import { useLanguage } from "@/hooks/useLanguage";
 import { LinkButton, SocialLinks, Tooltip } from "@/components/ui";
 
-const Hero = () => {
-  const { t } = useLanguage();
+interface SocialLinkProps {
+  icon: string;
+  href: string;
+  label: string;
+}
 
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/isakskold", label: "GitHub" },
-    {
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/isak-sk%C3%B6ld-3b7a0b28a/",
-      label: "LinkedIn",
-    },
-    { icon: Mail, href: "mailto:isaksfrontend@gmail.com", label: "Email" },
-  ];
+interface HeroClientProps {
+  title: string;
+  subtitle: string;
+  description: string;
+  viewWork: string;
+  downloadResume: string;
+  socialLinks: SocialLinkProps[];
+}
+
+const HeroClient = ({
+  title,
+  subtitle,
+  description,
+  viewWork,
+  downloadResume,
+  socialLinks,
+}: HeroClientProps) => {
+  // Convert string icon names to actual icon components
+  const iconMap = {
+    Github,
+    Linkedin,
+    Mail,
+  };
+
+  const mappedSocialLinks = socialLinks.map((link) => ({
+    ...link,
+    icon: iconMap[link.icon as keyof typeof iconMap],
+  }));
 
   return (
     <section
@@ -26,19 +47,17 @@ const Hero = () => {
       <div className="container mx-auto">
         <div className="relative z-10 max-w-4xl mx-auto space-y-6">
           <h1 className="font-bold text-responsive-h1">
-            <span className="block text-[hsl(var(--foreground))]">
-              {t("hero.title")}
-            </span>
-            <span className="gradient-text">{t("hero.subtitle")}</span>
+            <span className="block text-[hsl(var(--foreground))]">{title}</span>
+            <span className="gradient-text">{subtitle}</span>
           </h1>
 
           <p className="text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto leading-relaxed text-responsive-p">
-            {t("hero.description")}
+            {description}
           </p>
 
           <div className="flex flex-row gap-2 sm:gap-3 justify-center items-center">
             <LinkButton href="#projects" variant="primary" size="md">
-              {t("hero.viewWork")}
+              {viewWork}
             </LinkButton>
             <Tooltip content="Coming soon" position="top">
               <LinkButton
@@ -47,14 +66,14 @@ const Hero = () => {
                 size="md"
                 disabled={true}
               >
-                {t("hero.downloadResume")}
+                {downloadResume}
               </LinkButton>
             </Tooltip>
           </div>
 
           <div>
             <SocialLinks
-              links={socialLinks}
+              links={mappedSocialLinks}
               className="justify-center space-x-8"
             />
           </div>
@@ -96,4 +115,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroClient;

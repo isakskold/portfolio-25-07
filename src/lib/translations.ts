@@ -31,25 +31,6 @@ export const translations = {
   },
 };
 
-// Server-side language detection
-export function detectLanguageFromHeaders(
-  acceptLanguage: string | null
-): Language {
-  if (!acceptLanguage) return "en";
-
-  // Parse Accept-Language header
-  const languages = acceptLanguage
-    .split(",")
-    .map((lang) => lang.split(";")[0].trim().toLowerCase());
-
-  // Check for Swedish
-  if (languages.some((lang) => lang.startsWith("sv"))) {
-    return "sv";
-  }
-
-  return "en";
-}
-
 // Translation function that works on both server and client
 export function getTranslation(
   key: string,

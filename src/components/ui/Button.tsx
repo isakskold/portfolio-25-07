@@ -40,7 +40,7 @@ const getVariantClasses = (variant: string) => {
     case "secondary":
       return "border-2 border-[hsl(var(--interactive))]/30 hover:border-[hsl(var(--interactive))]/60 text-[hsl(var(--foreground))] hover:bg-[hsl(var(--interactive))]/5";
     case "language":
-      return "text-[hsl(var(--foreground))] opacity-60 hover:opacity-100 hover:bg-[hsl(var(--interactive))]/10";
+      return "text-[hsl(var(--foreground))] transition-colors duration-200 hover:bg-[hsl(var(--interactive))]/5";
     case "icon":
       return "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--interactive))]";
     case "scroll":

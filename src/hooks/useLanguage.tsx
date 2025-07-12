@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  ReactNode,
-} from "react";
+import { useState, createContext, useContext, ReactNode } from "react";
 import { Language, getTranslation } from "@/lib/translations";
 
 interface LanguageContextType {
@@ -19,18 +13,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
-// Get stored language from localStorage (client-side only)
-const getStoredLanguage = (): Language | null => {
-  if (typeof window === "undefined") return null;
-
-  const stored = localStorage.getItem("preferred-language");
-  if (stored === "en" || stored === "sv") {
-    return stored as Language;
-  }
-
-  return null;
-};
-
 export const LanguageProvider = ({
   children,
   initialLanguage,
@@ -40,13 +22,6 @@ export const LanguageProvider = ({
 }) => {
   // Start with server-detected language
   const [language, setLanguageState] = useState<Language>(initialLanguage);
-
-  useEffect(() => {
-    const storedLang = getStoredLanguage();
-    if (storedLang && storedLang !== initialLanguage) {
-      setLanguageState(storedLang);
-    }
-  }, [initialLanguage]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

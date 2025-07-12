@@ -4,27 +4,60 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Menu, X } from "lucide-react";
-import { IconButton } from "@/components/ui";
-import ReactCountryFlag from "react-country-flag";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Button, IconButton } from "@/components/ui";
+import ReactCountryFlag from "react-country-flag";
+
+function debounce<F extends (...args: any[]) => any>(
+  func: F,
+  wait: number
+): (...args: Parameters<F>) => void {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+  return (...args: Parameters<F>) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const { language, setLanguage, t } = useLanguage();
+  const [currentHash, setCurrentHash] = useState("");
+  const { language, t } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    setCurrentHash(window.location.hash);
+  }, []);
+
+  const getLocalizedPath = (locale: string) => {
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments[0] === "en" || segments[0] === "sv") {
+      segments[0] = locale;
+    } else {
+      segments.unshift(locale);
+    }
+    return `/${segments.join("/")}${currentHash}`;
+  };
+
+  const navLinks = [
+    { href: "#about", label: t("nav.about") },
+    { href: "#projects", label: t("nav.projects") },
+    { href: "#contact", label: t("nav.contact") },
+  ];
 
   const handleHomeClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    if (pathname === "/") {
+    if (["/en", "/sv"].includes(pathname)) {
       e.preventDefault();
-      // If there's a hash in the URL (e.g., #about), replace it so the bar shows root path
       if (window.location.hash) {
-        router.replace("/", { scroll: false });
+        router.replace(pathname, { scroll: false });
       }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -51,6 +84,11 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    const debouncedUpdateUrl = debounce((hash) => {
+      setCurrentHash(hash);
+      router.replace(hash || pathname, { scroll: false });
+    }, 150);
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
 
@@ -67,17 +105,20 @@ const Header = () => {
       });
 
       setActiveSection(currentSection || "");
+
+      if (currentSection) {
+        debouncedUpdateUrl(`#${currentSection}`);
+      } else if (window.scrollY < 400) {
+        // Only remove hash if we are at the top of the page
+        debouncedUpdateUrl("");
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleLanguage = (newLang: "en" | "sv") => {
-    setLanguage(newLang);
-  };
+  }, [pathname, router]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -89,179 +130,138 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 ${
-        isScrolled ? "shadow-md" : ""
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-lg" : "bg-white shadow-sm"
       }`}
     >
-      <div
-        className={`transition-colors duration-300 ${
-          isScrolled ? "bg-[hsl(var(--background))]/80 backdrop-blur-sm" : ""
-        }`}
-      >
-        <div className="container mx-auto flex items-center justify-between p-4">
-          <Link
-            href="/"
-            scroll={false}
-            onClick={handleHomeClick}
-            className="text-2xl font-bold gradient-text"
-          >
-            Isak Sköld
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              href="#about"
-              className={`text-lg text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "about" ? "nav-link-active" : ""
+      <div className="container mx-auto flex items-center justify-between p-4">
+        <Link
+          href="/"
+          onClick={handleHomeClick}
+          className="text-2xl font-bold gradient-text"
+        >
+          Isak Sköld
+        </Link>
+        <nav className="hidden md:flex items-center space-x-6">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`font-medium transition-colors duration-300 ${
+                activeSection === link.href.substring(1)
+                  ? "text-[hsl(var(--interactive))]"
+                  : "text-[hsl(var(--foreground))] hover:text-[hsl(var(--interactive))]"
               }`}
             >
-              {t("nav.about")}
-            </Link>
-            <Link
-              href="#projects"
-              className={`text-lg text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "projects" ? "nav-link-active" : ""
-              }`}
-            >
-              {t("nav.projects")}
-            </Link>
-
-            <Link
-              href="#contact"
-              className={`text-lg text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "contact" ? "nav-link-active" : ""
-              }`}
-            >
-              {t("nav.contact")}
-            </Link>
-
-            {/* Language Toggle */}
-            <div className="flex items-center space-x-2 ml-4">
-              <button
-                onClick={() => toggleLanguage("en")}
-                className={`flex items-center space-x-1 px-2 py-1 rounded transition-colors ${
-                  language === "en"
-                    ? "bg-[hsl(var(--interactive))]/20 text-[hsl(var(--interactive))]"
-                    : "text-[hsl(var(--foreground))] opacity-60 hover:opacity-100"
-                }`}
+              {link.label as string}
+            </a>
+          ))}
+          {/* Language Toggle */}
+          <div className="flex items-center space-x-2 group">
+            <Link href={getLocalizedPath("en")} passHref>
+              <Button
+                variant="language"
+                size="sm"
                 aria-label="Switch to English"
+                className={`hover:bg-[hsl(var(--interactive))]/40 ${
+                  language === "en"
+                    ? "bg-[hsl(var(--interactive))]/30 group-hover:[&:not(:hover)]:bg-[hsl(var(--interactive))]/10"
+                    : ""
+                }`}
               >
                 <ReactCountryFlag
                   countryCode="GB"
                   svg
-                  style={{ width: "1.25em", height: "1.25em" }}
+                  style={{ width: "1.5em", height: "1.5em" }}
                 />
-              </button>
-              <button
-                onClick={() => toggleLanguage("sv")}
-                className={`flex items-center space-x-1 px-2 py-1 rounded transition-colors ${
-                  language === "sv"
-                    ? "bg-[hsl(var(--interactive))]/20 text-[hsl(var(--interactive))]"
-                    : "text-[hsl(var(--foreground))] opacity-60 hover:opacity-100"
-                }`}
+              </Button>
+            </Link>
+            <Link href={getLocalizedPath("sv")} passHref>
+              <Button
+                variant="language"
+                size="sm"
                 aria-label="Switch to Swedish"
+                className={`hover:bg-[hsl(var(--interactive))]/40 ${
+                  language === "sv"
+                    ? "bg-[hsl(var(--interactive))]/30 group-hover:[&:not(:hover)]:bg-[hsl(var(--interactive))]/10"
+                    : ""
+                }`}
               >
                 <ReactCountryFlag
                   countryCode="SE"
                   svg
-                  style={{ width: "1.25em", height: "1.25em" }}
+                  style={{ width: "1.5em", height: "1.5em" }}
                 />
-              </button>
-            </div>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <IconButton
-              icon={isMenuOpen ? X : Menu}
-              onClick={toggleMenu}
-              variant="icon"
-              aria-label="Toggle menu"
-            />
+              </Button>
+            </Link>
           </div>
+        </nav>
+        <div className="md:hidden">
+          <IconButton icon={Menu} onClick={toggleMenu} aria-label="Open menu" />
         </div>
       </div>
-
-      {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[hsl(var(--background))]/95 backdrop-blur-sm shadow-lg">
-          <nav className="container mx-auto flex flex-col items-center space-y-6 py-8">
-            <Link
-              href="#about"
-              className={`text-2xl text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "about" ? "nav-link-active" : ""
-              }`}
-              onClick={closeMenu}
-            >
-              {t("nav.about")}
-            </Link>
-            <Link
-              href="#projects"
-              className={`text-2xl text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "projects" ? "nav-link-active" : ""
-              }`}
-              onClick={closeMenu}
-            >
-              {t("nav.projects")}
-            </Link>
-            <Link
-              href="#skills"
-              className={`text-2xl text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "skills" ? "nav-link-active" : ""
-              }`}
-              onClick={closeMenu}
-            >
-              {t("nav.skills")}
-            </Link>
-            <Link
-              href="#contact"
-              className={`text-2xl text-[hsl(var(--foreground))] opacity-80 hover:opacity-100 transition-opacity ${
-                activeSection === "contact" ? "nav-link-active" : ""
-              }`}
-              onClick={closeMenu}
-            >
-              {t("nav.contact")}
-            </Link>
-
-            {/* Language Toggle */}
-            <div className="flex items-center space-x-4 pt-4">
-              <button
-                onClick={() => {
-                  toggleLanguage("en");
-                  closeMenu();
-                }}
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors ${
-                  language === "en"
-                    ? "bg-[hsl(var(--interactive))]/20 text-[hsl(var(--interactive))]"
-                    : "text-[hsl(var(--foreground))] opacity-60 hover:opacity-100"
-                }`}
-                aria-label="Switch to English"
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={closeMenu}
+        ></div>
+      )}
+      {isMenuOpen && (
+        <div className="fixed top-0 right-0 h-full w-64 bg-background z-50 p-6 flex flex-col shadow-2xl">
+          <button onClick={closeMenu} className="self-end p-2 text-2xl">
+            <X />
+          </button>
+          <nav className="flex flex-col items-center space-y-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                className="text-2xl font-medium text-[hsl(var(--foreground))] transition-colors duration-300 hover:text-[hsl(var(--primary))]"
               >
-                <ReactCountryFlag
-                  countryCode="GB"
-                  svg
-                  style={{ width: "1.5em", height: "1.5em" }}
-                />
-              </button>
-              <button
-                onClick={() => {
-                  toggleLanguage("sv");
-                  closeMenu();
-                }}
-                className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors ${
-                  language === "sv"
-                    ? "bg-[hsl(var(--interactive))]/20 text-[hsl(var(--interactive))]"
-                    : "text-[hsl(var(--foreground))] opacity-60 hover:opacity-100"
-                }`}
-                aria-label="Switch to Swedish"
-              >
-                <ReactCountryFlag
-                  countryCode="SE"
-                  svg
-                  style={{ width: "1.5em", height: "1.5em" }}
-                />
-              </button>
+                {link.label as string}
+              </a>
+            ))}
+            {/* Mobile Language Toggle */}
+            <div className="flex items-center gap-4 pt-4 group">
+              <Link href={getLocalizedPath("en")} passHref>
+                <Button
+                  variant="language"
+                  size="sm"
+                  onClick={closeMenu}
+                  aria-label="Switch to English"
+                  className={`hover:bg-[hsl(var(--interactive))]/40 ${
+                    language === "en"
+                      ? "bg-[hsl(var(--interactive))]/30 group-hover:[&:not(:hover)]:bg-[hsl(var(--interactive))]/10"
+                      : ""
+                  }`}
+                >
+                  <ReactCountryFlag
+                    countryCode="GB"
+                    svg
+                    style={{ width: "1.5em", height: "1.5em" }}
+                  />
+                </Button>
+              </Link>
+              <Link href={getLocalizedPath("sv")} passHref>
+                <Button
+                  variant="language"
+                  size="sm"
+                  onClick={closeMenu}
+                  aria-label="Switch to Swedish"
+                  className={`hover:bg-[hsl(var(--interactive))]/40 ${
+                    language === "sv"
+                      ? "bg-[hsl(var(--interactive))]/30 group-hover:[&:not(:hover)]:bg-[hsl(var(--interactive))]/10"
+                      : ""
+                  }`}
+                >
+                  <ReactCountryFlag
+                    countryCode="SE"
+                    svg
+                    style={{ width: "1.5em", height: "1.5em" }}
+                  />
+                </Button>
+              </Link>
             </div>
           </nav>
         </div>

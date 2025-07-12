@@ -3,11 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { Code, Database, Smartphone, ExternalLink, Github } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
 import { LinkButton, TechnologyBadge, FeatureListItem } from "@/components/ui";
-import { projectsTranslations } from "@/lib/projects";
+import ProjectJsonLd from "./ProjectJsonLd";
 
-type Project = {
+export type Project = {
   category: string;
   title: string;
   description: string;
@@ -19,6 +18,15 @@ type Project = {
   buttonText: string;
   showGithub: boolean;
 };
+
+interface ProjectsClientProps {
+  title: string;
+  subtitle: string;
+  keyFeatures: string;
+  technologies: string;
+  codeButton: string;
+  projects: Project[];
+}
 
 const getIcon = (category: string) => {
   switch (category) {
@@ -33,62 +41,14 @@ const getIcon = (category: string) => {
   }
 };
 
-const Projects = () => {
-  const { t, language } = useLanguage();
-
-  // Define projects with proper feature arrays based on language
-  const getProjects = (): Project[] => {
-    const featuresMap = projectsTranslations[language];
-
-    return [
-      {
-        category: "Full Stack",
-        title: t("projects.ecommerce.title") as string,
-        description: t("projects.ecommerce.description") as string,
-        features: featuresMap.ecommerce.features,
-        technologies: ["Next.js", "Supabase", "PostgreSQL", "Vercel", "Prisma"],
-        image: "/pngs/pizzaApp.png",
-        liveUrl:
-          "https://digital-payment-saas-git-general-demo-isaks-projects-7661787e.vercel.app/",
-        githubUrl: featuresMap.ecommerce.githubUrl,
-        buttonText: featuresMap.ecommerce.buttonText,
-        showGithub: featuresMap.ecommerce.showGithub,
-      },
-      {
-        category: "CMS",
-        title: t("projects.cms.title") as string,
-        description: t("projects.cms.description") as string,
-        features: featuresMap.cms.features,
-        technologies: ["Next.js", "TypeScript", "AWS", "Authentication", "API"],
-        image: "/pngs/CMS.png",
-        liveUrl: "https://cms-ten-snowy.vercel.app/",
-        githubUrl: featuresMap.cms.githubUrl,
-        buttonText: featuresMap.cms.buttonText,
-        showGithub: featuresMap.cms.showGithub,
-      },
-      {
-        category: "SaaS",
-        title: t("projects.dashboard.title") as string,
-        description: t("projects.dashboard.description") as string,
-        features: featuresMap.dashboard.features,
-        technologies: [
-          "AWS Amplify",
-          "RBAC",
-          "TypeScript",
-          "GraphQL",
-          "TailwindCSS",
-        ],
-        image: "/pngs/oppi.png",
-        liveUrl: "https://opi-early-reg.vercel.app/",
-        githubUrl: featuresMap.dashboard.githubUrl,
-        buttonText: featuresMap.dashboard.buttonText,
-        showGithub: featuresMap.dashboard.showGithub,
-      },
-    ];
-  };
-
-  const projects = getProjects();
-
+const ProjectsClient = ({
+  title,
+  subtitle,
+  keyFeatures,
+  technologies,
+  codeButton,
+  projects,
+}: ProjectsClientProps) => {
   return (
     <section
       id="projects"
@@ -96,20 +56,19 @@ const Projects = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-bold mb-4 text-responsive-h2">
-            {t("projects.title") as string}
-          </h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">{title}</h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            {t("projects.subtitle") as string}
+            {subtitle}
           </p>
         </div>
 
         <div className="space-y-24">
           {projects.map((project, index) => (
-            <div
+            <article
               key={index}
               className={`grid lg:grid-cols-2 gap-12 items-center`}
             >
+              <ProjectJsonLd project={project} />
               <div
                 className={`relative w-full h-80 ${
                   index % 2 === 1 ? "lg:order-last" : ""
@@ -139,9 +98,7 @@ const Projects = () => {
                 ></p>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3">
-                    {t("projects.keyFeatures") as string}
-                  </h4>
+                  <h4 className="font-semibold mb-3">{keyFeatures}</h4>
                   <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
                     {project.features.map((feature, featureIndex) => (
                       <FeatureListItem key={featureIndex}>
@@ -152,9 +109,7 @@ const Projects = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold mb-3">
-                    {t("projects.technologies") as string}
-                  </h4>
+                  <h4 className="font-semibold mb-3">{technologies}</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
                       <TechnologyBadge key={techIndex}>{tech}</TechnologyBadge>
@@ -174,12 +129,12 @@ const Projects = () => {
                       external
                     >
                       <Github size={18} />
-                      {t("projects.code") as string}
+                      {codeButton}
                     </LinkButton>
                   )}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
@@ -187,4 +142,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectsClient;

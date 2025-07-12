@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Mail,
   Briefcase,
@@ -11,39 +12,46 @@ import {
   Linkedin,
   ExternalLink,
 } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
 import { Card, IconText, FeatureListItem } from "@/components/ui";
 
-const Contact = () => {
-  const { t } = useLanguage();
+interface Section {
+  title: string;
+  icon: string;
+  items: string[];
+}
 
-  // Define sections using translation data
-  const getSections = () => {
-    return [
-      {
-        title: t("contact.workArrangements.title") as string,
-        icon: Briefcase,
-        items: t("contact.workArrangements.items") as string[],
-      },
-      {
-        title: t("contact.locationPreference.title") as string,
-        icon: Globe,
-        items: t("contact.locationPreference.items") as string[],
-      },
-      {
-        title: t("contact.expertise.title") as string,
-        icon: Laptop,
-        items: t("contact.expertise.items") as string[],
-      },
-    ];
+interface ContactClientProps {
+  title: string;
+  subtitle: string;
+  email: string;
+  emailText: string;
+  linkedin: string;
+  linkedinText: string;
+  github: string;
+  githubText: string;
+  whyWork: string;
+  whyWorkItems: string[];
+  sections: Section[];
+}
+
+const ContactClient = ({
+  title,
+  subtitle,
+  email,
+  emailText,
+  linkedin,
+  linkedinText,
+  github,
+  githubText,
+  whyWork,
+  whyWorkItems,
+  sections,
+}: ContactClientProps) => {
+  const iconMap: { [key: string]: React.ElementType } = {
+    Briefcase,
+    Globe,
+    Laptop,
   };
-
-  const getWhyWorkWithMe = () => {
-    return t("contact.whyWorkItems") as string[];
-  };
-
-  const sections = getSections();
-  const whyWorkWithMe = getWhyWorkWithMe();
 
   return (
     <section
@@ -52,11 +60,9 @@ const Contact = () => {
     >
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-bold mb-4 text-responsive-h2">
-            {t("contact.title")}
-          </h2>
+          <h2 className="font-bold mb-4 text-responsive-h2">{title}</h2>
           <p className="text-xl text-[hsl(var(--muted-foreground))] max-w-3xl mx-auto">
-            {t("contact.subtitle")}
+            {subtitle}
           </p>
         </div>
 
@@ -68,9 +74,9 @@ const Contact = () => {
                   <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
                   <IconText
                     icon={Mail}
-                    title={t("contact.email") as string}
+                    title={email}
                     subtitle="isaksfrontend@gmail.com"
-                    description={t("contact.emailText") as string}
+                    description={emailText}
                   />
                 </div>
               </a>
@@ -84,9 +90,9 @@ const Contact = () => {
                   <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
                   <IconText
                     icon={Linkedin}
-                    title={t("contact.linkedin") as string}
+                    title={linkedin}
                     subtitle="LinkedIn Profile"
-                    description={t("contact.linkedinText") as string}
+                    description={linkedinText}
                   />
                 </div>
               </a>
@@ -100,18 +106,18 @@ const Contact = () => {
                   <ExternalLink className="absolute top-3 right-3 w-4 h-4 text-[hsl(var(--muted-foreground))] opacity-60 group-hover:text-[hsl(var(--interactive))] group-hover:opacity-100 transition-all duration-300" />
                   <IconText
                     icon={Github}
-                    title={t("contact.github") as string}
+                    title={github}
                     subtitle="GitHub Profile"
-                    description={t("contact.githubText") as string}
+                    description={githubText}
                   />
                 </div>
               </a>
             </div>
 
             <Card variant="interactive" className="mt-12" padding="lg">
-              <h3 className="text-xl font-bold mb-4">{t("contact.whyWork")}</h3>
+              <h3 className="text-xl font-bold mb-4">{whyWork}</h3>
               <ul className="space-y-3">
-                {whyWorkWithMe.map((item, index) => (
+                {whyWorkItems.map((item, index) => (
                   <FeatureListItem
                     key={index}
                     icon={CheckCircle}
@@ -131,49 +137,55 @@ const Contact = () => {
               padding="lg"
             >
               <div className="space-y-12">
-                {sections.map((section, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col md:flex-row items-center gap-8"
-                  >
+                {sections.map((section, index) => {
+                  const IconComponent = iconMap[section.icon];
+                  return (
                     <div
-                      className={`flex-shrink-0 ${
-                        index % 2 !== 0 ? "md:order-last" : ""
-                      }`}
+                      key={index}
+                      className="flex flex-col md:flex-row items-center gap-8"
                     >
-                      <section.icon className="w-20 h-20 text-[hsl(var(--interactive))]" />
-                    </div>
-                    <div
-                      className={`flex-grow text-center ${
-                        index % 2 !== 0 ? "md:text-right" : "md:text-left"
-                      }`}
-                    >
-                      <h4 className="text-2xl font-bold mb-3">
-                        {section.title}
-                      </h4>
-                      <ul
-                        className={`space-y-2 ${
-                          index % 2 !== 0 ? "inline-block text-left" : ""
+                      <div
+                        className={`flex-shrink-0 ${
+                          index % 2 !== 0 ? "md:order-last" : ""
                         }`}
                       >
-                        {section.items.map((item, itemIndex) => (
-                          <FeatureListItem key={itemIndex} icon={ChevronRight}>
-                            {item}
-                          </FeatureListItem>
-                        ))}
-                      </ul>
+                        {IconComponent && (
+                          <IconComponent className="w-20 h-20 text-[hsl(var(--interactive))]" />
+                        )}
+                      </div>
+                      <div
+                        className={`flex-grow text-center ${
+                          index % 2 !== 0 ? "md:text-right" : "md:text-left"
+                        }`}
+                      >
+                        <h4 className="text-2xl font-bold mb-3">
+                          {section.title}
+                        </h4>
+                        <ul
+                          className={`space-y-2 ${
+                            index % 2 !== 0 ? "inline-block text-left" : ""
+                          }`}
+                        >
+                          {section.items.map((item, itemIndex) => (
+                            <FeatureListItem
+                              key={itemIndex}
+                              icon={ChevronRight}
+                            >
+                              {item}
+                            </FeatureListItem>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </Card>
           </div>
         </div>
       </div>
-
-      {/* Removed individual ScrollUpButton */}
     </section>
   );
 };
 
-export default Contact;
+export default ContactClient;
