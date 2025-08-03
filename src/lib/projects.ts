@@ -37,18 +37,18 @@ export const projectsTranslations = {
       githubUrl: "https://github.com/isakskold/cms", // Replace with your actual GitHub URL
     },
     dashboard: {
-      title: "OPPi",
+      title: "GroundZero000's Website",
       description:
-        "A platform that helps recruiters find the right candidate for the job. This project is still under development. I handle the technical development, while business management and administration are done by Nima & Niklas, with UX design by Amanda.",
+        "A website for an esport content creator who streams casually, makes YouTube videos and commentates on high level gameplay in Rocket League. The content creator can update content manually thanks to the integrated Netlify CMS. Features a preview of his Twitch channel and automatically fetches latest YouTube videos to showcase fresh content.",
       features: [
-        "Early registration",
-        "Job seeker profiles",
-        "Filter search results",
-        "RBAC for managing users",
+        "Integrated Decap CMS for content management",
+        "Live Twitch channel preview",
+        "Automatic YouTube video fetching",
+        "Fresh content showcase",
       ],
-      buttonText: "Early Registration",
+      buttonText: "Visit Website",
       showGithub: true,
-      githubUrl: "https://github.com/isakskold/opi", // Replace with your actual GitHub URL
+      githubUrl: "https://github.com/isakskold/gz000",
     },
   },
   sv: {
@@ -88,18 +88,18 @@ export const projectsTranslations = {
       githubUrl: "https://github.com/isakskold/cms", // Replace with your actual GitHub URL
     },
     dashboard: {
-      title: "OPPi",
+      title: "GroundZero000's hemsida",
       description:
-        "En plattform som hjälper rekryterare att hitta rätt kandidat för jobbet. Detta projekt är fortfarande under utveckling. Jag ansvarar för den tekniska utvecklingen, medan affärsledning och administration utförs av Nima & Niklas, med UX-design av Amanda.",
+        "En hemsida för en esport-innehållsskapare som streamar tillfälligt, gör YouTube-videor och kommenterar högstadiet gameplay i Rocket League. Innehållsskaparen kan uppdatera innehåll manuellt tack vare det integrerade Netlify CMS:et. Har en förhandsgranskning av hans Twitch-kanal och hämtar automatiskt de senaste YouTube-videorna för att visa upp färskt innehåll.",
       features: [
-        "Tidig registrering",
-        "Jobbsökande profiler",
-        "Filtrerar sökresultat",
-        "RBAC för att hantera användare",
+        "Integrerat Decap CMS för innehållshantering",
+        "Live Twitch-kanalförhandsgranskning",
+        "Automatisk YouTube-videohämtning",
+        "Färskt innehållsshowcase",
       ],
-      buttonText: "Tidig registrering",
+      buttonText: "Besök hemsida",
       showGithub: true,
-      githubUrl: "https://github.com/isakskold/opi", // Replace with your actual GitHub URL
+      githubUrl: "", // Add GitHub URL when ready
     },
   },
 };

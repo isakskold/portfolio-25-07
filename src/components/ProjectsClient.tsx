@@ -2,7 +2,14 @@
 
 import React from "react";
 import Image from "next/image";
-import { Code, Database, Smartphone, ExternalLink, Github } from "lucide-react";
+import {
+  Code,
+  Database,
+  Smartphone,
+  ExternalLink,
+  Github,
+  Video,
+} from "lucide-react";
 import { LinkButton, TechnologyBadge, FeatureListItem } from "@/components/ui";
 import ProjectJsonLd from "./ProjectJsonLd";
 
@@ -32,10 +39,12 @@ const getIcon = (category: string) => {
   switch (category) {
     case "Full Stack":
       return <Code className="w-5 h-5" />;
-    case "SaaS":
+    case "CMS":
       return <Database className="w-5 h-5" />;
-    case "Data Visualization":
+    case "SaaS":
       return <Smartphone className="w-5 h-5" />;
+    case "Content Creator":
+      return <Video className="w-5 h-5" />;
     default:
       return <Code className="w-5 h-5" />;
   }
@@ -79,7 +88,7 @@ const ProjectsClient = ({
                   alt={project.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover rounded-xl shadow-lg hover-lift border-2 border-[hsl(var(--interactive))]/20"
+                  className="object-cover object-top rounded-xl shadow-lg hover-lift border-2 border-[hsl(var(--interactive))]/20"
                   priority={index === 0}
                 />
               </div>
